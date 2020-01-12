@@ -18,5 +18,5 @@ void Test(){
 
 //Waits 15 seconds and does nothing
 void Nothing(){
-  delay(15000);
+pros::delay(15000);
 }
