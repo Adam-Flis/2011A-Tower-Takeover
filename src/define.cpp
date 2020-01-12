@@ -1,0 +1,65 @@
+#include "main.h"
+
+/* ********** Define Motor Ports ********** */
+
+#define LFD_Port 12
+#define LBD_Port 13
+#define RFD_Port 16
+#define RBD_Port 17
+#define Angler_Port 11
+#define Arm_Port 2
+#define Cube_Intake_Left_Port 1
+#define Cube_Intake_Right_Port 10
+
+/* ********** Define Sensor Ports ********** */
+
+#define Left_Encoder_Top_Port 'g'
+#define Left_Encoder_Bottom_Port 'h'
+#define Right_Encoder_Top_Port 'a'
+#define Right_Encoder_Bottom_Port 'b'
+#define Middle_Encoder_Top_Port 'e'
+#define Middle_Encoder_Bottomm_Port 'f'
+#define Angler_Potentiomenter_Port 'd'
+#define Arm_Potentiometer_Port 'c'
+
+/* ********** Creates Motors ********** */
+
+Motor LFD(LFD_Port, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
+Motor LBD(LBD_Port, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
+Motor RFD(RFD_Port, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
+Motor RBD(RBD_Port, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
+Motor Arm(Arm_Port, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
+Motor CIL(Cube_Intake_Left_Port, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
+Motor CIR(Cube_Intake_Right_Port, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
+Motor Angler(Angler_Port, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees);
+
+/* ********** Creates Motor Groups ********** */
+
+MotorGroup LeftSide{LFD, LBD};
+MotorGroup RightSide{RFD, RBD};
+MotorGroup Intake{CIL, CIR};
+
+/* ********** Creates Sensors ********** */
+
+ADIEncoder LeftEnc(Left_Encoder_Top_Port, Left_Encoder_Bottom_Port, true);
+ADIEncoder RightEnc(Right_Encoder_Top_Port, Right_Encoder_Bottom_Port, false);
+ADIEncoder MiddleEnc(Middle_Encoder_Top_Port, Middle_Encoder_Bottomm_Port, false);
+Potentiometer ArmPot(Arm_Potentiometer_Port);
+Potentiometer AnglerPot(Angler_Potentiomenter_Port);
+
+/* ********** Creates Controller ********** */
+
+Controller Main(ControllerId::master);
+
+/* ********** Angler Variables ********** */
+
+int AnglerPotMin = 1156;
+int AnglerPotMax = 3133;
+float Angler_kP = 9.2;
+
+/* ********** Arm Variables ********** */
+
+int ArmHold = 1085;
+int LowChalice = 1695;
+int MediumChalice = 2245;
+int ArmStart = 685;
