@@ -47,7 +47,7 @@ auto Chassis = ChassisControllerBuilder()
       std::make_unique<AverageFilter<3>>(), //Distance controller filter
       std::make_unique<AverageFilter<3>>(), //Turn controller filter
       std::make_unique<AverageFilter<3>>())  //Angle controller filter
-  .withClosedLoopControllerTimeUtil(50, 5, 250_ms) //Min error, min error derivative and min time at error to be considered settled
+  .withClosedLoopControllerTimeUtil(50, 5, 150_ms) //Min error, min error derivative and min time at error to be considered settled
   .withSensors(LeftEnc, RightEnc, MiddleEnc)
   .withDimensions(AbstractMotor::gearset::green, {{Tracking_Diameter,Tracking_Length,Middle_Length,Tracking_Diameter}, quadEncoderTPR})
   .withOdometry() //Use the same scales as the chassis (above)
@@ -88,7 +88,7 @@ void ArmHome(int TimeOut){
   int EndTime = Time(TimeOut);
   while (EndTime != pros::millis()){
     int Error = ArmPot.get() - ArmStart;
-    float Voltage = Error * Arm_kP;
+    double Voltage = Error * Arm_kP;
     if (Error < 5){break;} //Breaks or ends loop if arm reaches position
     if (Voltage > 12000){
       Voltage = 12000; //Maximum arm voltage for down
@@ -109,7 +109,7 @@ void ArmLowChalice(int TimeOut){
   int EndTime = Time(TimeOut);
   while (EndTime != pros::millis()){
     int Error = LowChalice - ArmPot.get();
-    float Voltage = Error * Arm_kP;
+    double Voltage = Error * Arm_kP;
     if (Error < 5){break;} //Breaks or ends loop if arm reaches position
     if (Voltage > 12000){
       Voltage = 12000; //Maximum arm voltage for going up
@@ -130,7 +130,7 @@ void ArmMediumChalice(int TimeOut){
   int EndTime = Time(TimeOut);
   while (EndTime != pros::millis()){
     int Error = MediumChalice - ArmPot.get();
-    float Voltage = Error * Arm_kP;
+    double Voltage = Error * Arm_kP;
     if (Error < 5){break;} //Breaks or ends loop if arm reaches position
     if (Voltage > 12000){
       Voltage = 12000; //Maximum arm voltage for going up
@@ -153,7 +153,7 @@ void AnglerHome(int TimeOut){
   int EndTime = Time(TimeOut);
   while (EndTime != pros::millis()){
     int Error = AnglerPot.get() - AnglerPotMin;
-    float Voltage = Error * Angler_kP;
+    double Voltage = Error * Angler_kP;
     if (Error < 10){break;} //Breaks or ends loop if angler reaches position
     if (Voltage > 12000){
       Voltage = 12000; //Maximum angler voltage for going down
@@ -174,7 +174,7 @@ void AnglerStack(int TimeOut){
   int EndTime = Time(TimeOut);
   while (EndTime != pros::millis()){
     int Error = AnglerPotMax - AnglerPot.get();
-    float Voltage = Error * Angler_kP;
+    double Voltage = Error * Angler_kP;
     if (Error < 10){break;} //Breaks or ends loop if angler reaches position
     if (Voltage > 12000){
       Voltage = 12000; //Maximum angler voltage for going up

@@ -3,7 +3,7 @@
 
 //Code that runs when you start the program
 void initialize(){
-  //pros::lcd::initialize();
+  pros::lcd::initialize();
 }
 
 //Code that runs when the robot is in the disabled state by the competition switch or the field controller

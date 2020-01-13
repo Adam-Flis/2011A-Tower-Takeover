@@ -4,6 +4,8 @@
 
  void autonomous(){
 
+   pros::lcd::shutdown();
+
    /* ********** Blue Side ********** */
 
    //BlueBigClose();

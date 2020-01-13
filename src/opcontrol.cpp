@@ -28,13 +28,14 @@ void opcontrol(){
 
   while(1){
 
-    /* ********** Tracking Wheel Testing ********** */
-    //Used to make sure the encoders on the tracking wheels work
-    //Prints the encoder value to the lcd display
+    /* ********** Sensor Testing ********** */
+    //Used to make sure sensors work by print their value to the lcd display
 
-    //lcd::print(1, "Encoder Left: %lf", LeftEnc.get());
-    //lcd::print(2, "Encoder Right: %lf", RightEnc.get());
-    //lcd::print(3, "Encoder Middle: %lf", MiddleEnc.get());
+    /*pros::lcd::print(2, "Angler Pot: %lf", AnglerPot.get());
+    pros::lcd::print(3, "Arm Pot: %lf", ArmPot.get());
+    pros::lcd::print(4, "Encoder Left: %lf", LeftEnc.get());
+    pros::lcd::print(5, "Encoder Right: %lf", RightEnc.get());
+    pros::lcd::print(6, "Encoder Middle: %lf", MiddleEnc.get());*/
 
     /* ********** Drivetrain Control ********** */
 
@@ -76,24 +77,26 @@ void opcontrol(){
 
     if (ButtonA.isPressed() && AnglerPot.get() < AnglerPotMax){ //Button A pressed, raise tray
       int Error = AnglerPotMax - AnglerPot.get();
-      float Voltage = Error * Angler_kP;
+      double Voltage = Error * Angler_kP;
       if (Voltage > 12000){
         Voltage = 12000; //Maximum angler voltage for going up
       }
       else if (Voltage < 4000){
         Voltage = 4000; //Minimum angler voltage for going up
       }
+      pros::lcd::print(1, "Angler Voltage: %lf", Voltage); //Prints voltage value to lcd
       Angler.moveVoltage(Voltage); //Sets angler voltage
 		}
     else if (ButtonB.isPressed() && AnglerPot.get() > AnglerPotMin){ //Button B pressed, lower tray
       int Error = AnglerPot.get() - AnglerPotMin;
-      float Voltage = Error * Angler_kP;
+      double Voltage = Error * Angler_kP;
       if (Voltage > 12000){
         Voltage = 12000; //Maximum angler voltage for going down
       }
       else if (Voltage < 8000){
         Voltage = 8000; //Minimum angler voltage for going down
       }
+      pros::lcd::print(1, "Angler Voltage: %lf", Voltage); //Prints voltage value to lcd
       Angler.moveVoltage(-Voltage); //Sets angler voltage
 		}
     else { //Sets brake mode and stops tray when buttons A & B are not pressed
@@ -103,6 +106,7 @@ void opcontrol(){
       else { //Set brake mode brake if anything else
         Angler.setBrakeMode(AbstractMotor::brakeMode::brake);
       }
+      pros::lcd::print(1, "Angler Voltage: 0"); //Resets lcd line to 0
       Angler.moveVelocity(0); //Stops angler
     }
 
