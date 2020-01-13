@@ -38,7 +38,6 @@ void BlueSmall(){
   Angler.moveVoltage(12000);
   pros::delay(100);
 
-
   //Turn to scoring zone
   Chassis->setMaxVelocity(55);
   Chassis->turnAngleAsync(-112_deg);
