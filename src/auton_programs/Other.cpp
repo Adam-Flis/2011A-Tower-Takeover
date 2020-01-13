@@ -5,7 +5,7 @@
 //USed for testing commands and tuning PIDs
 void Test(){
 
-  Chassis->moveDistanceAsync(36_in);
+  Chassis->moveDistance(36_in);
   Chassis->waitUntilSettled();
   Intake.moveVelocity(200);
 
@@ -18,5 +18,5 @@ void Test(){
 
 //Waits 15 seconds and does nothing
 void Nothing(){
-pros::delay(15000);
+  pros::delay(15000);
 }

@@ -9,15 +9,15 @@
 
 /* ********** Distance PID Parameters ********** */
 
-#define Distance_kP 0.00083f
-#define Distance_kI 0.00000f
-#define Distance_kD 0.0000f
+#define Distance_kP 0.0f
+#define Distance_kI 0.0f
+#define Distance_kD 0.0f
 
 /* ********** Turn PID Parameters ********** */
 
-#define Turn_kP 0.001f
-#define Turn_kI 0.0000012f
-#define Turn_kD 0.000042f
+#define Turn_kP 0.0f
+#define Turn_kI 0.0f
+#define Turn_kD 0.0f
 
 /* ********** Angle PID Parameters ********** */
 
@@ -28,8 +28,8 @@
 /* ********** 2D Motion Profiling Parameters ********** */
 
 #define Max_Linear_Velocity 2.0
-#define Max_Linear_Acceleration 4.5
-#define Max_Linear_Jerk 4.0
+#define Max_Linear_Acceleration 4.0
+#define Max_Linear_Jerk 3.0
 
 /* ********** Other Parameters ********** */
 
@@ -40,9 +40,17 @@
 //Generates the chassis needed to use Okapi's built in PIDs, odometry, and 2D motion profiling
 auto Chassis = ChassisControllerBuilder()
   .withMotors(LeftSide, RightSide)
-  .withDimensions(AbstractMotor::gearset::green, {{4_in, 12_in}, imev5GreenTPR})
+  .withGains({Distance_kP, Distance_kI, Distance_kD}, //Distance controller gains
+             {Turn_kP, Turn_kI, Turn_kD}, //Turn controller gains
+             {Angle_kP, Angle_kI, Angle_kD})  //Angle controller gains (helps drive straight
+  .withDerivativeFilters(
+      std::make_unique<AverageFilter<3>>(), //Distance controller filter
+      std::make_unique<AverageFilter<3>>(), //Turn controller filter
+      std::make_unique<AverageFilter<3>>())  //Angle controller filter
+  .withClosedLoopControllerTimeUtil(50, 5, 250_ms) //Min error, min error derivative and min time at error to be considered settled
   .withSensors(LeftEnc, RightEnc, MiddleEnc)
-  .withOdometry( {{Tracking_Diameter,Tracking_Length,Middle_Length,Tracking_Diameter}, quadEncoderTPR})
+  .withDimensions(AbstractMotor::gearset::green, {{Tracking_Diameter,Tracking_Length,Middle_Length,Tracking_Diameter}, quadEncoderTPR})
+  .withOdometry() //Use the same scales as the chassis (above)
   .buildOdometry();
 
 //Establishes the controller used in Okapi's built in 2D motion profiling
