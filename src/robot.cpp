@@ -3,7 +3,7 @@
 
 /* ********** Chassis Builder Parameters ********** */
 
-#define Tracking_Length 7_in //Distance between tracking wheels
+#define Tracking_Length 12_in //Distance between tracking wheels
 #define Tracking_Diameter 2.75_in //Wheel diameter of tracking wheel
 #define Middle_Length 0.5_in //Distance of the middle tracking wheel to the center of turning
 
@@ -33,7 +33,7 @@
 
 /* ********** Other Parameters ********** */
 
-#define Arm_kP 14.0f
+#define Arm_kP 14.2f
 
 /* ********** Drivetrain ********** */
 
@@ -89,7 +89,7 @@ void ArmHome(int TimeOut){
   while (EndTime != pros::millis()){
     int Error = ArmPot.get() - ArmStart;
     double Voltage = Error * Arm_kP;
-    if (Error < 5){break;} //Breaks or ends loop if arm reaches position
+    if (Error < 10){break;} //Breaks or ends loop if arm reaches position
     if (Voltage > 12000){
       Voltage = 12000; //Maximum arm voltage for down
     }
@@ -110,7 +110,7 @@ void ArmLowChalice(int TimeOut){
   while (EndTime != pros::millis()){
     int Error = LowChalice - ArmPot.get();
     double Voltage = Error * Arm_kP;
-    if (Error < 5){break;} //Breaks or ends loop if arm reaches position
+    if (Error < 10){break;} //Breaks or ends loop if arm reaches position
     if (Voltage > 12000){
       Voltage = 12000; //Maximum arm voltage for going up
     }
@@ -131,7 +131,7 @@ void ArmMediumChalice(int TimeOut){
   while (EndTime != pros::millis()){
     int Error = MediumChalice - ArmPot.get();
     double Voltage = Error * Arm_kP;
-    if (Error < 5){break;} //Breaks or ends loop if arm reaches position
+    if (Error < 10){break;} //Breaks or ends loop if arm reaches position
     if (Voltage > 12000){
       Voltage = 12000; //Maximum arm voltage for going up
     }
