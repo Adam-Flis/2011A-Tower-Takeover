@@ -42,7 +42,7 @@ auto Chassis = ChassisControllerBuilder()
   .withMotors(LeftSide, RightSide)
   .withGains({Distance_kP, Distance_kI, Distance_kD}, //Distance controller gains
              {Turn_kP, Turn_kI, Turn_kD}, //Turn controller gains
-             {Angle_kP, Angle_kI, Angle_kD})  //Angle controller gains (helps drive straight
+             {Angle_kP, Angle_kI, Angle_kD})  //Angle controller gains (helps drive straight)
   .withDerivativeFilters(
       std::make_unique<AverageFilter<3>>(), //Distance controller filter
       std::make_unique<AverageFilter<3>>(), //Turn controller filter
@@ -89,7 +89,7 @@ void ArmHome(int TimeOut){
   while (EndTime != pros::millis()){
     int Error = ArmPot.get() - ArmStart;
     double Voltage = Error * Arm_kP;
-    if (Error < 10){break;} //Breaks or ends loop if arm reaches position
+    if (Error < 5){break;} //Breaks or ends loop if arm reaches position
     if (Voltage > 12000){
       Voltage = 12000; //Maximum arm voltage for down
     }
@@ -110,7 +110,7 @@ void ArmLowChalice(int TimeOut){
   while (EndTime != pros::millis()){
     int Error = LowChalice - ArmPot.get();
     double Voltage = Error * Arm_kP;
-    if (Error < 10){break;} //Breaks or ends loop if arm reaches position
+    if (Error < 5){break;} //Breaks or ends loop if arm reaches position
     if (Voltage > 12000){
       Voltage = 12000; //Maximum arm voltage for going up
     }
@@ -131,7 +131,7 @@ void ArmMediumChalice(int TimeOut){
   while (EndTime != pros::millis()){
     int Error = MediumChalice - ArmPot.get();
     double Voltage = Error * Arm_kP;
-    if (Error < 10){break;} //Breaks or ends loop if arm reaches position
+    if (Error < 5){break;} //Breaks or ends loop if arm reaches position
     if (Voltage > 12000){
       Voltage = 12000; //Maximum arm voltage for going up
     }

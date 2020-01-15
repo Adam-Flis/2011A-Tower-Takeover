@@ -2,25 +2,25 @@
 
 /* ********** Define Motor Ports ********** */
 
-#define LFD_Port 12
-#define LBD_Port 13
+#define LFD_Port 14
+#define LBD_Port 15
 #define RFD_Port 16
 #define RBD_Port 17
-#define Angler_Port 11
+#define Angler_Port 13
 #define Arm_Port 2
 #define Cube_Intake_Left_Port 1
-#define Cube_Intake_Right_Port 10
+#define Cube_Intake_Right_Port 3
 
 /* ********** Define Sensor Ports ********** */
 
-#define Left_Encoder_Top_Port 'g'
-#define Left_Encoder_Bottom_Port 'h'
-#define Right_Encoder_Top_Port 'a'
-#define Right_Encoder_Bottom_Port 'b'
+#define Left_Encoder_Top_Port 'h'
+#define Left_Encoder_Bottom_Port 'g'
+#define Right_Encoder_Top_Port 'c'
+#define Right_Encoder_Bottom_Port 'd'
 #define Middle_Encoder_Top_Port 'e'
 #define Middle_Encoder_Bottomm_Port 'f'
-#define Angler_Potentiomenter_Port 'd'
-#define Arm_Potentiometer_Port 'c'
+#define Angler_Potentiomenter_Port 'b'
+#define Arm_Potentiometer_Port 'a'
 
 /* ********** Creates Motors ********** */
 
@@ -41,7 +41,7 @@ MotorGroup Intake{CIL, CIR};
 
 /* ********** Creates Sensors ********** */
 
-ADIEncoder LeftEnc(Left_Encoder_Top_Port, Left_Encoder_Bottom_Port, true);
+ADIEncoder LeftEnc(Left_Encoder_Top_Port, Left_Encoder_Bottom_Port, false);
 ADIEncoder RightEnc(Right_Encoder_Top_Port, Right_Encoder_Bottom_Port, false);
 ADIEncoder MiddleEnc(Middle_Encoder_Top_Port, Middle_Encoder_Bottomm_Port, false);
 Potentiometer ArmPot(Arm_Potentiometer_Port);
@@ -53,8 +53,8 @@ Controller Main(ControllerId::master);
 
 /* ********** Angler Variables ********** */
 
-int AnglerPotMin = 1156;
-int AnglerPotMax = 3133;
+int AnglerPotMin = 1195;
+int AnglerPotMax = 3180;
 float Angler_kP = 9.2;
 
 /* ********** Arm Variables ********** */
@@ -62,4 +62,4 @@ float Angler_kP = 9.2;
 int ArmHold = 1085;
 int LowChalice = 1695;
 int MediumChalice = 2245;
-int ArmStart = 685;
+int ArmStart = 680;

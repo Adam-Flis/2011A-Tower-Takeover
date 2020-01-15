@@ -28,15 +28,14 @@ void opcontrol(){
 
   while(1){
 
-    /* ********** Sensor & MotorTesting ********** */
-    //Used to make sure sensors and motors work by print their value to the lcd display
+    /* ********** Sensor Testing ********** */
+    //Used to make sure sensors and motors work by printing their value to the lcd display
 
-    /*pros::lcd::print(1, "Angler Voltage: %lf", Angler.getVoltage());
-    pros::lcd::print(2, "Angler Pot: %lf", AnglerPot.get());
-    pros::lcd::print(3, "Arm Pot: %lf", ArmPot.get());
-    pros::lcd::print(4, "Encoder Left: %lf", LeftEnc.get());
-    pros::lcd::print(5, "Encoder Right: %lf", RightEnc.get());
-    pros::lcd::print(6, "Encoder Middle: %lf", MiddleEnc.get());*/
+    pros::lcd::print(1, "Encoder Left: %lf", LeftEnc.get());
+    pros::lcd::print(2, "Encoder Right: %lf", RightEnc.get());
+    pros::lcd::print(3, "Encoder Middle: %lf", MiddleEnc.get());
+    pros::lcd::print(4, "Angler Pot: %lf", AnglerPot.get());
+    pros::lcd::print(5, "Arm Pot: %lf", ArmPot.get());
 
     /* ********** Drivetrain Control ********** */
 
