@@ -13,8 +13,8 @@
 
 /* ********** Define Sensor Ports ********** */
 
-#define Left_Encoder_Top_Port 'h'
-#define Left_Encoder_Bottom_Port 'g'
+#define Left_Encoder_Top_Port 'g'
+#define Left_Encoder_Bottom_Port 'h'
 #define Right_Encoder_Top_Port 'c'
 #define Right_Encoder_Bottom_Port 'd'
 #define Middle_Encoder_Top_Port 'e'
