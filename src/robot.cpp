@@ -3,14 +3,14 @@
 
 /* ********** Chassis Builder Parameters ********** */
 
-#define Tracking_Length 12_in //Distance between tracking wheels
+#define Tracking_Length 13_in //Distance between tracking wheels
 #define Tracking_Diameter 2.75_in //Wheel diameter of tracking wheel
-#define Middle_Length 0.5_in //Distance of the middle tracking wheel to the center of turning
+#define Middle_Length 2.0_in //Distance of the middle tracking wheel to the center of turning
 
 /* ********** Distance PID Parameters ********** */
 
-#define Distance_kP 0.0f
-#define Distance_kI 0.0f
+#define Distance_kP 0.00124f
+#define Distance_kI 0.000001f
 #define Distance_kD 0.0f
 
 /* ********** Turn PID Parameters ********** */
@@ -47,7 +47,7 @@ auto Chassis = ChassisControllerBuilder()
       std::make_unique<AverageFilter<3>>(), //Distance controller filter
       std::make_unique<AverageFilter<3>>(), //Turn controller filter
       std::make_unique<AverageFilter<3>>())  //Angle controller filter
-  .withClosedLoopControllerTimeUtil(50, 5, 150_ms) //Min error, min error derivative and min time at error to be considered settled
+  .withClosedLoopControllerTimeUtil(50, 5, 250_ms) //Min error, min error derivative and min time at error to be considered settled
   .withSensors(LeftEnc, RightEnc, MiddleEnc)
   .withDimensions(AbstractMotor::gearset::green, {{Tracking_Diameter,Tracking_Length,Middle_Length,Tracking_Diameter}, quadEncoderTPR})
   .withOdometry() //Use the same scales as the chassis (above)

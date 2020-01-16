@@ -17,15 +17,14 @@ void BlueSmall(){
   //Drive to intake cubes 1-5
   Chassis->setMaxVelocity(80);
   Chassis->moveDistanceAsync(2.8_ft);
-  ProfileController->generatePath({{0_ft, 0_ft, 0_deg}, {2.45_ft, -1.3_ft, 0_deg}}, "A");
   Chassis->waitUntilSettled();
 
   //Drive to 2nd line
   Intake.moveVelocity(0);
   Chassis->setMaxVelocity(200);
-  ProfileController->setTarget("A",true);
+  ProfileController->loadPath("/usd/A.csv", "A");
+  ProfileController->setTarget("A", true, false);
   ProfileController->waitUntilSettled();
-  ProfileController->removePath("A");
 
   //Drive at cubes 6-8
   Chassis->setMaxVelocity(80);

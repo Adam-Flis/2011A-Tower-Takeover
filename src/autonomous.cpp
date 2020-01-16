@@ -8,7 +8,7 @@
 
    //BlueBigClose();
    //BlueBigCorner();
-   BlueSmall();
+   //BlueSmall();
 
    /* ********** Red Side ********** */
 
@@ -27,6 +27,6 @@
    /* ********** Other ********** */
 
    //Nothing();
-   //Test();
+   Test();
 
  }
