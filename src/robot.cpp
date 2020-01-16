@@ -29,7 +29,7 @@
 
 #define Max_Linear_Velocity 1.0 //Maximum linear velocity of the chassis in m/s
 #define Max_Linear_Acceleration 2.0 //Maximum linear acceleration of the chassis in m/s/s
-#define Max_Linear_Jerk 10.0 //Maximum linear jerk of the chassis in m/s/s/s
+#define Max_Linear_Jerk 3.0 //Maximum linear jerk of the chassis in m/s/s/s
 
 /* ********** Other Parameters ********** */
 

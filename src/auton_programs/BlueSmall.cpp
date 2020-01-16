@@ -23,7 +23,7 @@ void BlueSmall(){
   Intake.moveVelocity(0);
   Chassis->setMaxVelocity(200);
   ProfileController->loadPath("/usd/A.csv", "A");
-  ProfileController->setTarget("A", true, false);
+  ProfileController->setTarget("A", true, true);
   ProfileController->waitUntilSettled();
 
   //Drive at cubes 6-8
