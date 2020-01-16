@@ -19,29 +19,30 @@ void RedSmall(){
   Chassis->moveDistance(3.5_ft);
 
   //Grab 6th cube
-  Chassis->setMaxVelocity(150);
+  Chassis->setMaxVelocity(160);
   Chassis->moveDistance(-3_in);
   Chassis->setMaxVelocity(200);
   Chassis->turnAngle(-18_deg);
   Chassis->moveDistanceAsync(1_ft);
-  pros::delay(1000);
+  pros::delay(800);
   Chassis->stop();
 
   //Drive away from 6th cube
-  Chassis->setMaxVelocity(150);
+  Chassis->setMaxVelocity(170);
   Chassis->moveDistance(-1_ft);
   Intake.moveVelocity(0);
 
   //Turn and drive at scoring zone
   Chassis->setMaxVelocity(200);
-  Chassis->turnAngle(170_deg);
-  Chassis->moveDistanceAsync(1.9_ft);
+  Chassis->turnAngle(172_deg);
+  Chassis->moveDistanceAsync(2.1_ft);
   Angler.moveVoltage(6000);
-  Intake.moveVelocity(-50);
-  Chassis->waitUntilSettled();
+  Intake.moveVelocity(-40);
+  pros::delay(1300);
+  Chassis->stop();
 
   //Score cubes
-  AnglerStack(1150);
+  AnglerStack(1100);
   Chassis->moveDistance(-6_in);
 
 }
