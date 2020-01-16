@@ -7,7 +7,7 @@
 #define RFD_Port 16
 #define RBD_Port 17
 #define Angler_Port 13
-#define Arm_Port 2
+#define Arm_Port 5
 #define Cube_Intake_Left_Port 1
 #define Cube_Intake_Right_Port 3
 

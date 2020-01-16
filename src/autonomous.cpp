@@ -13,8 +13,8 @@
    /* ********** Red Side ********** */
 
    //RedBigClose();
-   //RedBigCorner();
-   //RedSmall();
+   //RedBigCorner
+   RedSmall();
 
    /* ********** Universal ********** */
 
@@ -27,6 +27,6 @@
    /* ********** Other ********** */
 
    //Nothing();
-   Test();
+   //Test();
 
  }

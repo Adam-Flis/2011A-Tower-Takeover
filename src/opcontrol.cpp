@@ -25,20 +25,17 @@ void opcontrol(){
   Chassis->setMaxVelocity(200); //Makes sure to reset the velocity to the maximum on the drivetrain
   Chassis->getModel()->setMaxVoltage(12000); //Makes sure to reset the voltage to the maximum on the drivetrain
   Chassis->getModel()->setBrakeMode(AbstractMotor::brakeMode::brake); //Sets brake mode brake on drivetrain
-  LeftEnc.reset();
-  RightEnc.reset();
-  MiddleEnc.reset();
 
   while(1){
 
     /* ********** Sensor Testing ********** */
     //Used to make sure sensors and work by printing their value to the lcd display
 
-    pros::lcd::print(1, "Encoder Left: %lf", LeftEnc.get());
+    /*pros::lcd::print(1, "Encoder Left: %lf", LeftEnc.get());
     pros::lcd::print(2, "Encoder Right: %lf", RightEnc.get());
     pros::lcd::print(3, "Encoder Middle: %lf", MiddleEnc.get());
     pros::lcd::print(4, "Angler Pot: %lf", AnglerPot.get());
-    pros::lcd::print(5, "Arm Pot: %lf", ArmPot.get());
+    pros::lcd::print(5, "Arm Pot: %lf", ArmPot.get());*/
 
     /* ********** Drivetrain Control ********** */
 

@@ -10,13 +10,13 @@
 /* ********** Distance PID Parameters ********** */
 
 #define Distance_kP 0.00124f
-#define Distance_kI 0.000001f
+#define Distance_kI 0.0000005f
 #define Distance_kD 0.0f
 
 /* ********** Turn PID Parameters ********** */
 
-#define Turn_kP 0.0f
-#define Turn_kI 0.0f
+#define Turn_kP 0.0011f
+#define Turn_kI 0.0000003f
 #define Turn_kD 0.0f
 
 /* ********** Angle PID Parameters ********** */
@@ -47,7 +47,7 @@ auto Chassis = ChassisControllerBuilder()
       std::make_unique<AverageFilter<3>>(), //Distance controller filter
       std::make_unique<AverageFilter<3>>(), //Turn controller filter
       std::make_unique<AverageFilter<3>>())  //Angle controller filter
-  .withClosedLoopControllerTimeUtil(50, 5, 250_ms) //Min error, min error derivative and min time at error to be considered settled
+  .withClosedLoopControllerTimeUtil(75, 5, 150_ms) //Min error, min error derivative and min time at error to be considered settled
   .withSensors(LeftEnc, RightEnc, MiddleEnc)
   .withDimensions(AbstractMotor::gearset::green, {{Tracking_Diameter,Tracking_Length,Middle_Length,Tracking_Diameter}, quadEncoderTPR})
   .withOdometry() //Use the same scales as the chassis (above)
@@ -154,7 +154,7 @@ void AnglerHome(int TimeOut){
   while (EndTime != pros::millis()){
     int Error = AnglerPot.get() - AnglerPotMin;
     double Voltage = Error * Angler_kP;
-    if (Error < 10){break;} //Breaks or ends loop if angler reaches position
+    if (Error < 30){break;} //Breaks or ends loop if angler reaches position
     if (Voltage > 12000){
       Voltage = 12000; //Maximum angler voltage for going down
     }
@@ -175,7 +175,7 @@ void AnglerStack(int TimeOut){
   while (EndTime != pros::millis()){
     int Error = AnglerPotMax - AnglerPot.get();
     double Voltage = Error * Angler_kP;
-    if (Error < 10){break;} //Breaks or ends loop if angler reaches position
+    if (Error < 30){break;} //Breaks or ends loop if angler reaches position
     if (Voltage > 12000){
       Voltage = 12000; //Maximum angler voltage for going up
     }
