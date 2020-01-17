@@ -13,19 +13,22 @@ void BlueBigClose(){
   Intake.moveVelocity(200);
   Chassis->getModel()->setBrakeMode(AbstractMotor::brakeMode::brake);
   Arm.setBrakeMode(AbstractMotor::brakeMode::hold);
+  pros::delay(200);
 
   //Drive at cube tower and intake cubes
-  Chassis->setMaxVelocity(160);
-  Chassis->driveToPoint({3.6_ft, 0_ft});
-  pros::delay(800);
+  Chassis->setMaxVelocity(150);
+  Chassis->moveDistanceAsync(3.3_ft);
+  pros::delay(1600);
+  Chassis->stop();
+  pros::delay(700);
 
   //Grab 5th cube
   Chassis->setMaxVelocity(170);
-  Chassis->moveDistance(-4_in);
+  Chassis->moveDistance(-6_in);
   Chassis->setMaxVelocity(200);
   Chassis->turnAngle(18_deg);
-  Chassis->moveDistanceAsync(9_in);
-  pros::delay(700);
+  Chassis->moveDistanceAsync(1_ft);
+  pros::delay(800);
   Chassis->stop();
 
   //Drive away from 5th cube
@@ -35,19 +38,18 @@ void BlueBigClose(){
   Chassis->stop();
 
   //Turn at the scoring zone
-  Chassis->turnAngleAsync(120_deg);
+  Chassis->setMaxVelocity(200);
+  Chassis->turnAngleAsync(105_deg);
   pros::delay(400);
   Intake.moveVelocity(0);
   Chassis->waitUntilSettled();
 
   //Drive at scoring zone
-  Chassis->moveDistanceAsync(3.0_ft);
-  pros::delay(400);
+  Chassis->setMaxVelocity(140);
   Intake.moveVelocity(200); //Suck up cube
-  pros::delay(600);
+  Chassis->moveDistanceAsync(3.0_ft);
+  pros::delay(1250);
   Intake.moveVelocity(-35);
-  Chassis->setMaxVelocity(100);
-  pros::delay(1000);
   Chassis->stop();
 
   //Score cubes
