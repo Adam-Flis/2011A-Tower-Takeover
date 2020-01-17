@@ -8,13 +8,13 @@
 
    //BlueBigClose();
    //BlueBigCorner();
-   //BlueSmall();
+   BlueSmall();
 
    /* ********** Red Side ********** */
 
    //RedBigClose();
    //RedBigCorner
-   RedSmall();
+   //RedSmall();
 
    /* ********** Universal ********** */
 

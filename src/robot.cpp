@@ -15,8 +15,8 @@
 
 /* ********** Turn PID Parameters ********** */
 
-#define Turn_kP 0.0011f
-#define Turn_kI 0.0000003f
+#define Turn_kP 0.00113f
+#define Turn_kI 0.0000001f
 #define Turn_kD 0.0f
 
 /* ********** Angle PID Parameters ********** */
@@ -71,11 +71,9 @@ int Time(int TimeInput){
 //Unfolds the tray during the autonomous period
 void Unfold(){
   Arm.moveVoltage(12000);
-  pros::delay(100);
-  Intake.moveVoltage(12000);
-  pros::delay(500);
+  pros::delay(800);
   Arm.moveVoltage(-12000);
-  pros::delay(650);
+  pros::delay(850);
   Arm.setBrakeMode(AbstractMotor::brakeMode::brake);
   Arm.moveVelocity(0);
 }
@@ -154,7 +152,7 @@ void AnglerHome(int TimeOut){
   while (EndTime != pros::millis()){
     int Error = AnglerPot.get() - AnglerPotMin;
     double Voltage = Error * Angler_kP;
-    if (Error < 30){break;} //Breaks or ends loop if angler reaches position
+    if (Error < 10){break;} //Breaks or ends loop if angler reaches position
     if (Voltage > 12000){
       Voltage = 12000; //Maximum angler voltage for going down
     }
@@ -175,7 +173,7 @@ void AnglerStack(int TimeOut){
   while (EndTime != pros::millis()){
     int Error = AnglerPotMax - AnglerPot.get();
     double Voltage = Error * Angler_kP;
-    if (Error < 30){break;} //Breaks or ends loop if angler reaches position
+    if (Error < 10){break;} //Breaks or ends loop if angler reaches position
     if (Voltage > 12000){
       Voltage = 12000; //Maximum angler voltage for going up
     }
