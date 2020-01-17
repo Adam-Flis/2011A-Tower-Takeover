@@ -8,11 +8,11 @@
 
    //BlueBigClose();
    //BlueBigCorner();
-   BlueSmall();
+   //BlueSmall();
 
    /* ********** Red Side ********** */
 
-   //RedBigClose();
+   RedBigClose();
    //RedBigCorner
    //RedSmall();
 

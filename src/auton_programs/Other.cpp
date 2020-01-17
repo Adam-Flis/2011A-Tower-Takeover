@@ -20,7 +20,6 @@ void Test(){
   ProfileController->setTarget("A", true, true);
   ProfileController->waitUntilSettled();*/
 
-  Unfold();
   Intake.moveVelocity(200);
 
 }
