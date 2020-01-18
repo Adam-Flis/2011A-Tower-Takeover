@@ -152,7 +152,7 @@ void AnglerHome(int TimeOut){
   while (EndTime != pros::millis()){
     int Error = AnglerPot.get() - AnglerPotMin;
     double Voltage = Error * Angler_kP;
-    if (Error < 10){break;} //Breaks or ends loop if angler reaches position
+    if (Error < 5){break;} //Breaks or ends loop if angler reaches position
     if (Voltage > 12000){
       Voltage = 12000; //Maximum angler voltage for going down
     }
@@ -173,7 +173,7 @@ void AnglerStack(int TimeOut){
   while (EndTime != pros::millis()){
     int Error = AnglerPotMax - AnglerPot.get();
     double Voltage = Error * Angler_kP;
-    if (Error < 10){break;} //Breaks or ends loop if angler reaches position
+    if (Error < 5){break;} //Breaks or ends loop if angler reaches position
     if (Voltage > 12000){
       Voltage = 12000; //Maximum angler voltage for going up
     }

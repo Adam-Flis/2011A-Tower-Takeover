@@ -17,7 +17,7 @@ void RedSmall(){
   //Drive to intake cubes 1-5
   Chassis->setMaxVelocity(80);
   Chassis->moveDistanceAsync(3.5_ft);
-  pros::delay(2000);
+  pros::delay(2500);
   Chassis->stop();
 
   //Grab 6th cube

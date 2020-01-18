@@ -8,49 +8,51 @@
 void BlueSmall(){
 
   //Unfolds tray
-  Unfold();
   Chassis->setState({0_in, 0_in, 0_deg});
+  Unfold();
   Intake.moveVelocity(200);
   Chassis->getModel()->setBrakeMode(AbstractMotor::brakeMode::brake);
   Arm.setBrakeMode(AbstractMotor::brakeMode::hold);
 
   //Drive to intake cubes 1-5
   Chassis->setMaxVelocity(80);
-  Chassis->driveToPoint({3.5_ft, 0_ft});
+  Chassis->moveDistanceAsync(3.5_ft);
+  pros::delay(2600);
+  Chassis->stop();
 
   //Grab 6th cube
   Chassis->setMaxVelocity(170);
-  Chassis->moveDistance(-4_in);
+  Chassis->moveDistance(-5.5_in);
   Chassis->setMaxVelocity(200);
-  Chassis->turnAngle(18_deg);
-  Chassis->moveDistanceAsync(9_in);
-  pros::delay(700);
+  Chassis->turnAngle(15_deg);
+  Chassis->moveDistanceAsync(11_in);
+  pros::delay(850);
   Chassis->stop();
 
   //Drive away from 6th cube
   Chassis->setMaxVelocity(170);
   Chassis->moveDistanceAsync(-1_ft);
-  pros::delay(600);
+  pros::delay(800);
   Chassis->stop();
 
   //Turn at scoring zone
   Chassis->setMaxVelocity(200);
-  Chassis->turnAngleAsync(180_deg);
-  pros::delay(500);
+  Chassis->turnAngleAsync(190_deg);
+  pros::delay(400);
   Intake.moveVelocity(0);
   Chassis->waitUntilSettled();
 
   //Drive at scoring zone
   Chassis->moveDistanceAsync(2.1_ft);
   Angler.moveVoltage(6000);
-  Intake.moveVelocity(-35);
-  pros::delay(550);
+  Intake.moveVelocity(-30);
+  pros::delay(400);
   Chassis->setMaxVelocity(100);
   pros::delay(950);
   Chassis->stop();
 
   //Score cubes
-  AnglerStack(1400);
+  AnglerStack(2000);
   Chassis->moveDistance(-6_in);
   Arm.setBrakeMode(AbstractMotor::brakeMode::brake);
 
