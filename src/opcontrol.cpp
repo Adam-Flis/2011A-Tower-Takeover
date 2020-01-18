@@ -28,6 +28,10 @@ void opcontrol(){
 
   while(1){
 
+    /*if (ButtonDown.isPressed()){
+      Unfold();
+    }*/
+
     /* ********** Sensor Testing ********** */
     //Used to make sure sensors and work by printing their value to the lcd display
 

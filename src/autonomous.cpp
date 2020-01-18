@@ -12,9 +12,9 @@
 
    /* ********** Red Side ********** */
 
-   RedBigClose();
+   //RedBigClose();
    //RedBigCorner
-   //RedSmall();
+   RedSmall();
 
    /* ********** Universal ********** */
 

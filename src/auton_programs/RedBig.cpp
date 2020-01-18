@@ -16,43 +16,46 @@ void RedBigClose(){
   pros::delay(200);
 
   //Drive at cube tower and intake cubes
-  Chassis->setMaxVelocity(150);
+  Chassis->setMaxVelocity(180);
   Chassis->moveDistanceAsync(3.3_ft);
-  pros::delay(1600);
+  pros::delay(1400);
   Chassis->stop();
-  pros::delay(700);
+  pros::delay(600);
 
   //Grab 5th cube
   Chassis->setMaxVelocity(170);
   Chassis->moveDistance(-6_in);
   Chassis->setMaxVelocity(200);
-  Chassis->turnAngle(-18_deg);
-  Chassis->moveDistanceAsync(1_ft);
-  pros::delay(800);
+  Chassis->turnAngle(-20_deg);
+  Chassis->moveDistanceAsync(10_in);
+  pros::delay(700);
   Chassis->stop();
 
   //Drive away from 5th cube
   Chassis->setMaxVelocity(170);
   Chassis->moveDistanceAsync(-1_ft);
-  pros::delay(600);
+  pros::delay(650);
   Chassis->stop();
 
   //Turn at the scoring zone
   Chassis->setMaxVelocity(200);
-  Chassis->turnAngleAsync(-105_deg);
+  Chassis->turnAngleAsync(-95_deg);
   pros::delay(400);
   Intake.moveVelocity(0);
   Chassis->waitUntilSettled();
 
   //Drive at scoring zone
-  Chassis->setMaxVelocity(140);
+  Chassis->setMaxVelocity(100);
   Intake.moveVelocity(200); //Suck up cube
   Chassis->moveDistanceAsync(3.0_ft);
-  pros::delay(1250);
+  pros::delay(1450);
   Intake.moveVelocity(-35);
   Chassis->stop();
 
   //Score cubes
+  RightSide.moveVelocity(150);
+  pros::delay(300);
+  RightSide.moveVelocity(0);
   AnglerStack(2500);
   Chassis->moveDistance(-6_in);
   Arm.setBrakeMode(AbstractMotor::brakeMode::brake);
