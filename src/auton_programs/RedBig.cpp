@@ -17,18 +17,20 @@ void RedBigClose(){
 
   //Drive at cube tower and intake cubes
   Chassis->setMaxVelocity(180);
-  Chassis->moveDistanceAsync(3.3_ft);
-  pros::delay(1400);
+  Chassis->moveDistanceAsync(3.4_ft);
+  pros::delay(1500);
   Chassis->stop();
   pros::delay(600);
 
   //Grab 5th cube
   Chassis->setMaxVelocity(170);
+  Intake.moveVelocity(100);
   Chassis->moveDistance(-6_in);
   Chassis->setMaxVelocity(200);
   Chassis->turnAngle(-20_deg);
-  Chassis->moveDistanceAsync(10_in);
-  pros::delay(700);
+  Intake.moveVelocity(200);
+  Chassis->moveDistanceAsync(1.2_ft);
+  pros::delay(1100);
   Chassis->stop();
 
   //Drive away from 5th cube
@@ -38,6 +40,10 @@ void RedBigClose(){
   Chassis->stop();
 
   //Turn at the scoring zone
+  pros::delay(500);
+  Angler.moveVoltage(8000);
+  pros::delay(500);
+  Angler.moveVoltage(0);
   Chassis->setMaxVelocity(200);
   Chassis->turnAngleAsync(-95_deg);
   pros::delay(400);

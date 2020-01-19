@@ -73,7 +73,7 @@ void Unfold(){
   Arm.moveVoltage(12000);
   pros::delay(800);
   Arm.moveVoltage(-12000);
-  pros::delay(850);
+  pros::delay(950);
   Arm.setBrakeMode(AbstractMotor::brakeMode::brake);
   Arm.moveVelocity(0);
 }

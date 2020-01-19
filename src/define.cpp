@@ -2,10 +2,10 @@
 
 /* ********** Define Motor Ports ********** */
 
-#define LFD_Port 14
-#define LBD_Port 15
-#define RFD_Port 16
-#define RBD_Port 17
+#define LFD_Port 15
+#define LBD_Port 16
+#define RFD_Port 17
+#define RBD_Port 18
 #define Angler_Port 13
 #define Arm_Port 5
 #define Cube_Intake_Left_Port 1
