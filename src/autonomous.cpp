@@ -6,14 +6,12 @@
 
    /* ********** Blue Side ********** */
 
-   //BlueBigClose();
-   //BlueBigCorner();
+   //BlueBig();
    //BlueSmall();
 
    /* ********** Red Side ********** */
 
-   RedBigClose();
-   //RedBigCorner
+   //RedBig();
    //RedSmall();
 
    /* ********** Universal ********** */

@@ -5,14 +5,12 @@
 
 /* ********** Blue Side ********** */
 
-void BlueBigClose();
-void BlueBigCorner();
+void BlueBig();
 void BlueSmall();
 
 /* ********** Red Side ********** */
 
-void RedBigClose();
-void RedBigCorner();
+void RedBig();
 void RedSmall();
 
 /* ********** Universal ********** */
