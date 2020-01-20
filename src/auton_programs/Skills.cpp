@@ -12,6 +12,7 @@ void Skills(){
   Intake.moveVelocity(200);
   Chassis->getModel()->setBrakeMode(AbstractMotor::brakeMode::brake);
   Arm.setBrakeMode(AbstractMotor::brakeMode::hold);
+  pros::delay(200);
 
   //Intakes 1st line of cubes
   Chassis->setMaxVelocity(75);

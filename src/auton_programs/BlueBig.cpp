@@ -15,51 +15,44 @@ void BlueBig(){
   Arm.setBrakeMode(AbstractMotor::brakeMode::hold);
   pros::delay(200);
 
-  //Drive at cube tower and intake cubes
-  Chassis->setMaxVelocity(180);
-  Chassis->moveDistanceAsync(3.4_ft);
-  pros::delay(1500);
-  Chassis->stop();
-  pros::delay(600);
+  //Drive at cube tower
+  Chassis->driveToPoint({3_ft, 0_ft});
+  pros::delay(800);
 
-  //Grab 5th cube
-  Chassis->setMaxVelocity(170);
+  //Turn and drive at chalice cube
   Intake.moveVelocity(100);
-  Chassis->moveDistance(-6_in);
-  Chassis->setMaxVelocity(200);
-  Chassis->turnAngle(20_deg);
+  Chassis->turnToAngle(20_deg);
   Intake.moveVelocity(200);
-  Chassis->moveDistanceAsync(1.2_ft);
-  pros::delay(1100);
-  Chassis->stop();
-
-  //Drive away from 5th cube
-  Chassis->setMaxVelocity(170);
-  Chassis->moveDistanceAsync(-1_ft);
-  pros::delay(650);
-  Chassis->stop();
-
-  //Turn at the scoring zone
-  Chassis->setMaxVelocity(200);
-  Chassis->turnAngleAsync(95_deg);
-  pros::delay(400);
-  Intake.moveVelocity(0);
-  Chassis->waitUntilSettled();
-
-  //Drive at scoring zone
   Chassis->setMaxVelocity(100);
-  Intake.moveVelocity(200); //Suck up cube
-  Chassis->moveDistanceAsync(3.0_ft);
-  pros::delay(1450);
-  Intake.moveVelocity(-35);
+  Chassis->moveDistanceAsync(1.5_ft);
+  pros::delay(800);
   Chassis->stop();
+
+  //Drive away from challice cube
+  Chassis->setMaxVelocity(200);
+  Chassis->driveToPoint({3_ft, 0_ft});
+  Intake.moveVelocity(100);
+
+  //Turn and drive at scoring zone
+  pros::delay(500);
+  Chassis->turnToAngle(135_deg);
+  Chassis->moveDistanceAsync(4_ft);
+  pros::delay(500);
+  Intake.moveVelocity(200);
+  pros::delay(1000);
+  Chassis->setMaxVelocity(100);
+  pros::delay(500);
+  Chassis->stop();
+  Intake.moveVelocity(100);
+
+  //Align on scoring zone
+  LeftSide.moveVelocity(200);
+  Intake.moveVelocity(-30);
+  pros::delay(1000);
+  LeftSide.moveVelocity(0);
 
   //Score cubes
-  LeftSide.moveVelocity(150);
-  pros::delay(300);
-  LeftSide.moveVelocity(0);
-  AnglerStack(2500);
-  Chassis->moveDistance(-6_in);
-  Arm.setBrakeMode(AbstractMotor::brakeMode::brake);
+  AnglerStack(3000);
+  Chassis->moveDistance(-1_ft);
 
 }
