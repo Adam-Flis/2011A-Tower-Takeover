@@ -62,10 +62,10 @@ void opcontrol(){
     /* ********** Arm Control ********** */
 
     if (ButtonR1.isPressed()){ //Button right 1 pressed, raise arm
-      Arm.moveVoltage(12000);
+      Arm.moveVelocity(200);
     }
-    else if (ButtonR2.isPressed() && ArmPot.get() > ArmStart){ //Button right 2 pressed, lower arm
-      Arm.moveVoltage(-12000);
+    else if (ButtonR2.isPressed()){ //Button right 2 pressed, lower arm
+      Arm.moveVelocity(-200);
     }
     else { //Sets brake mode and stops arm when buttons R1 & R2 are not pressed
  			if (ArmPot.get() > ArmHold) { //Set brake mode hold if over certain value

@@ -5,19 +5,19 @@
 
 #define Tracking_Length 13_in //Distance between tracking wheels
 #define Tracking_Diameter 2.75_in //Wheel diameter of tracking wheel
-#define Middle_Length 2.0_in //Distance of the middle tracking wheel to the center of turning
+#define Middle_Length 0.75_in //Distance of the middle tracking wheel to the center of turning
 
 /* ********** Distance PID Parameters ********** */
 
-#define Distance_kP 0.00124f
-#define Distance_kI 0.0000005f
-#define Distance_kD 0.0f
+#define Distance_kP 0.0008086f
+#define Distance_kI 0.0000034f
+#define Distance_kD 0.00000024f
 
 /* ********** Turn PID Parameters ********** */
 
-#define Turn_kP 0.00113f
-#define Turn_kI 0.0000001f
-#define Turn_kD 0.0f
+#define Turn_kP 0.0008086f
+#define Turn_kI 0.0000034f
+#define Turn_kD 0.00000024f
 
 /* ********** Angle PID Parameters ********** */
 
@@ -33,7 +33,7 @@
 
 /* ********** Other Parameters ********** */
 
-#define Arm_kP 14.2f
+#define Arm_kP 0.5f
 
 /* ********** Drivetrain ********** */
 
@@ -47,7 +47,7 @@ auto Chassis = ChassisControllerBuilder()
       std::make_unique<AverageFilter<3>>(), //Distance controller filter
       std::make_unique<AverageFilter<3>>(), //Turn controller filter
       std::make_unique<AverageFilter<3>>())  //Angle controller filter
-  .withClosedLoopControllerTimeUtil(75, 5, 150_ms) //Min error, min error derivative and min time at error to be considered settled
+  .withClosedLoopControllerTimeUtil(100, 5, 150_ms) //Min error, min error derivative and min time at error to be considered settled
   .withSensors(LeftEnc, RightEnc, MiddleEnc)
   .withDimensions(AbstractMotor::gearset::green, {{Tracking_Diameter,Tracking_Length,Middle_Length,Tracking_Diameter}, quadEncoderTPR})
   .withOdometry() //Use the same scales as the chassis (above)
@@ -70,9 +70,9 @@ int Time(int TimeInput){
 
 //Unfolds the tray during the autonomous period
 void Unfold(){
-  Arm.moveVoltage(12000);
+  Arm.moveVelocity(200);
   pros::delay(800);
-  Arm.moveVoltage(-12000);
+  Arm.moveVelocity(-200);
   pros::delay(950);
   Arm.setBrakeMode(AbstractMotor::brakeMode::brake);
   Arm.moveVelocity(0);
@@ -86,15 +86,15 @@ void ArmHome(int TimeOut){
   int EndTime = Time(TimeOut);
   while (EndTime != pros::millis()){
     int Error = ArmPot.get() - ArmStart;
-    double Voltage = Error * Arm_kP;
+    double Velocity = Error * Arm_kP;
     if (Error < 5){break;} //Breaks or ends loop if arm reaches position
-    if (Voltage > 12000){
-      Voltage = 12000; //Maximum arm voltage for down
+    if (Velocity > 200){
+      Velocity = 200; //Maximum arm velocity for down
     }
-    else if (Voltage < 8000){
-      Voltage = 8000; //Minimum arm voltage for down
+    else if (Velocity < 130){
+      Velocity = 130; //Minimum arm velocity for down
     }
-    Arm.moveVoltage(-Voltage); //Sets arm voltage
+    Arm.moveVelocity(-Velocity); //Sets arm velocity
     pros::delay(10); //Loop speed, prevents overload
   }
   Arm.setBrakeMode(AbstractMotor::brakeMode::brake); //Set brake mode brake
@@ -107,20 +107,20 @@ void ArmLowChalice(int TimeOut){
   int EndTime = Time(TimeOut);
   while (EndTime != pros::millis()){
     int Error = LowChalice - ArmPot.get();
-    double Voltage = Error * Arm_kP;
+    double Velocity = Error * Arm_kP;
     if (Error < 5){break;} //Breaks or ends loop if arm reaches position
-    if (Voltage > 12000){
-      Voltage = 12000; //Maximum arm voltage for going up
+    if (Velocity > 200){
+      Velocity = 200; //Maximum arm velocity for up
     }
-    else if (Voltage < 9600){
-      Voltage = 9600; //Minimum arm voltage for going up
+    else if (Velocity < 120){
+      Velocity = 120; //Minimum arm velocity for up
     }
-    Arm.moveVoltage(Voltage); //Sets arm voltage
+    Arm.moveVelocity(Velocity); //Sets arm velocity
     pros::delay(10); //Loop speed, prevents overload
   }
   Arm.setBrakeMode(AbstractMotor::brakeMode::hold); //Set brake mode hold
   Arm.moveVelocity(0); //Stops arm
-}
+  }
 
 //Moves the arm to the medium chalice position
 //Time out in milliseconds
@@ -128,20 +128,20 @@ void ArmMediumChalice(int TimeOut){
   int EndTime = Time(TimeOut);
   while (EndTime != pros::millis()){
     int Error = MediumChalice - ArmPot.get();
-    double Voltage = Error * Arm_kP;
+    double Velocity = Error * Arm_kP;
     if (Error < 5){break;} //Breaks or ends loop if arm reaches position
-    if (Voltage > 12000){
-      Voltage = 12000; //Maximum arm voltage for going up
+    if (Velocity > 200){
+      Velocity = 200; //Maximum arm velocity for up
     }
-    else if (Voltage < 9600){
-      Voltage = 9600; //Minimum arm voltage for going up
+    else if (Velocity < 120){
+      Velocity = 120; //Minimum arm velocity for up
     }
-    Arm.moveVoltage(Voltage); //Sets arm voltage
+    Arm.moveVelocity(-Velocity); //Sets arm velocity
     pros::delay(10); //Loop speed, prevents overload
   }
   Arm.setBrakeMode(AbstractMotor::brakeMode::hold); //Set brake mode hold
   Arm.moveVelocity(0); //Stops arm
-}
+  }
 
 /* ********** Angler Voids ********** */
 

@@ -5,8 +5,8 @@
 //USed for testing commands and tuning PIDs
 void Test(){
 
-  /*Chassis->moveDistance(36_in);
-  Chassis->waitUntilSettled();*/
+  Chassis->moveDistance(36_in);
+  Chassis->waitUntilSettled();
 
   /*Chassis->turnAngle(90_deg);
   Chassis->waitUntilSettled();*/
