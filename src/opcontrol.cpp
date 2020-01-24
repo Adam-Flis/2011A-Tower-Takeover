@@ -42,7 +42,6 @@ void opcontrol(){
     pros::lcd::print(3, "Encoder Middle: %lf", MiddleEnc.get());
     pros::lcd::print(4, "Angler Pot: %lf", AnglerPot.get());
     pros::lcd::print(5, "Arm Pot: %lf", ArmPot.get());*/
-    //pros::lcd::print(6, "%std::string", Chassis->getState().str());
 
     /* ********** Drivetrain Control ********** */
 

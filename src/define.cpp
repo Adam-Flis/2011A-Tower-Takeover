@@ -13,12 +13,12 @@
 
 /* ********** Define Sensor Ports ********** */
 
-#define Left_Encoder_Top_Port 'g'
-#define Left_Encoder_Bottom_Port 'h'
+#define Left_Encoder_Top_Port 'e'
+#define Left_Encoder_Bottom_Port 'f'
 #define Right_Encoder_Top_Port 'c'
 #define Right_Encoder_Bottom_Port 'd'
-#define Middle_Encoder_Top_Port 'e'
-#define Middle_Encoder_Bottomm_Port 'f'
+#define Middle_Encoder_Top_Port 'g'
+#define Middle_Encoder_Bottomm_Port 'h'
 #define Angler_Potentiomenter_Port 'b'
 #define Arm_Potentiometer_Port 'a'
 
