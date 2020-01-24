@@ -16,11 +16,11 @@
 
    /* ********** Universal ********** */
 
-   //Universal();
+   Universal();
 
    /* ********** Skills ********** */
 
-   Skills();
+   //Skills();
 
    /* ********** Other ********** */
 

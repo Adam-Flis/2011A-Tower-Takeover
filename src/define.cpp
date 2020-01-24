@@ -54,12 +54,12 @@ Controller Main(ControllerId::master);
 /* ********** Angler Variables ********** */
 
 int AnglerPotMin = 1195;
-int AnglerPotMax = 3180;
+int AnglerPotMax = 3195;
 float Angler_kP = 9.2;
 
 /* ********** Arm Variables ********** */
 
 int ArmHold = 1085;
 int LowChalice = 1695;
-int MediumChalice = 2245;
+int MediumChalice = 2300;
 int ArmStart = 665;

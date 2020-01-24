@@ -8,6 +8,7 @@ void Skills(){
 
   //Unfolds tray and sets state
   Chassis->setState({0_in, 0_in, 0_deg});
+  Chassis->driveToPoint({0.05_ft, 0_ft});
   //Unfold();
   Intake.moveVelocity(200);
   Chassis->getModel()->setBrakeMode(AbstractMotor::brakeMode::brake);
@@ -15,55 +16,63 @@ void Skills(){
   pros::delay(200);
 
   //Intakes 1st line of cubes
-  Chassis->setMaxVelocity(80);
-  Chassis->driveToPoint({2.8_ft, 0_ft});
+  Chassis->setMaxVelocity(60);
+  Chassis->driveToPoint({2.4_ft, 0_ft});
 
   //Turn at challice cube
-  Chassis->setMaxVelocity(200);
-  Chassis->turnToAngle(-25_deg);
+  Chassis->turnAngle(-23_deg);
 
   //Grab 6th cube
-  Chassis->setMaxVelocity(150);
-  Chassis->moveDistanceAsync(2_ft);
-  pros::delay(500);
-  Chassis->stop();
-  pros::delay(400);
-  Intake.moveVelocity(50);
+  Chassis->moveDistance(4.45_in);
+  Chassis->waitUntilSettled();
+  pros::delay(300);
+  Intake.moveVelocity(35);
 
   //Drive away from chalice
-  Chassis->setMaxVelocity(200);
-  Chassis->moveDistance(-1_ft);
-  Chassis->turnToAngle({152_deg});
+  Chassis->moveDistance(-8_in);
+  pros::delay(300);
+  Chassis->turnAngle({140_deg});
 
   //Drive to score
-  Chassis->moveDistanceAsync(3_ft);
-  pros::delay(300);
-  Chassis->setMaxVelocity(170);
-  Intake.moveVelocity(-35);
-  pros::delay(350);
-  Chassis->stop();
+  Chassis->moveDistance(1.5_ft);
+  RightSide.moveVelocity(100);
+  Intake.moveVelocity(-40);
+  pros::delay(550);
+  RightSide.moveVelocity(0);
   AnglerStack(3000);
 
   //Drive away from zone
-  Chassis->setMaxVelocity(200);
-  Chassis->moveDistance(-0.8_ft);
+  Chassis->moveDistance(-1_ft);
   Intake.moveVelocity(0);
-  Chassis->turnToAngle({-90_deg});
+  Chassis->turnAngle({100_deg});
   AnglerHome(4000);
+
 
   //Drive at challice and grab cube
   Intake.moveVelocity(200);
-  Chassis->driveToPoint({1.5_ft, -2.2_ft});
-  pros::delay(300);
+  Chassis->moveDistance(2.5_ft);
+  pros::delay(500);
 
   //Drive away from challice
   Intake.moveVelocity(50);
-  Chassis->moveDistanceAsync(-6_in);
+  Chassis->moveDistance(-6_in);
   Intake.moveVelocity(-200);
-  pros::delay(300);
+  pros::delay(400);
   Intake.moveVelocity(0);
-  ArmMediumChalice(3000);
+  ArmMediumChalice(900);
 
+  //Score in chalice
+  Chassis->moveDistance(11_in);
+  Intake.moveVelocity(-200);
+  pros::delay(500);
+  Intake.moveVelocity(0);
+  Chassis->moveDistance(-5_in);
+  ArmHome(1000);
+
+  //Go at next line
+  Chassis->turnAngle(65_deg);
+  Intake.moveVelocity(200);
+  Chassis->moveDistance(4_ft);
 
 
 }

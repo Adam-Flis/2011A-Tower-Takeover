@@ -25,6 +25,8 @@ void opcontrol(){
   Chassis->setMaxVelocity(200); //Makes sure to reset the velocity to the maximum on the drivetrain
   Chassis->getModel()->setMaxVoltage(12000); //Makes sure to reset the voltage to the maximum on the drivetrain
   Chassis->getModel()->setBrakeMode(AbstractMotor::brakeMode::brake); //Sets brake mode brake on drivetrain
+  Chassis->setState({0_ft,0_ft,0_deg});
+  bool TrayDown = false;
 
   while(1){
 
@@ -40,6 +42,7 @@ void opcontrol(){
     pros::lcd::print(3, "Encoder Middle: %lf", MiddleEnc.get());
     pros::lcd::print(4, "Angler Pot: %lf", AnglerPot.get());
     pros::lcd::print(5, "Arm Pot: %lf", ArmPot.get());*/
+    //pros::lcd::print(6, "%std::string", Chassis->getState().str());
 
     /* ********** Drivetrain Control ********** */
 
@@ -79,6 +82,10 @@ void opcontrol(){
 
     /* ********** Angler Control ********** */
 
+    if (ButtonB.changedToPressed()){
+      TrayDown = !TrayDown;
+    }
+
     if (ButtonA.isPressed() && AnglerPot.get() < AnglerPotMax){ //Button A pressed, raise tray
       int Error = AnglerPotMax - AnglerPot.get();
       double Voltage = Error * Angler_kP;
@@ -90,7 +97,7 @@ void opcontrol(){
       }
       Angler.moveVoltage(Voltage); //Sets angler voltage
 		}
-    else if (ButtonB.isPressed() && AnglerPot.get() > AnglerPotMin){ //Button B pressed, lower tray
+    else if (TrayDown == true && AnglerPot.get() > AnglerPotMin){ //Button B pressed, lower tray
       int Error = AnglerPot.get() - AnglerPotMin;
       double Voltage = Error * Angler_kP;
       if (Voltage > 12000){
@@ -108,6 +115,7 @@ void opcontrol(){
       else { //Set brake mode brake if anything else
         Angler.setBrakeMode(AbstractMotor::brakeMode::brake);
       }
+      TrayDown = false;
       Angler.moveVelocity(0); //Stops angler
     }
 

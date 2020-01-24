@@ -3,6 +3,8 @@
 
 /* ********** Chassis Builder Parameters ********** */
 
+#define Wheel_Diameter 4_in //Wheel diameter of omni wheels
+#define Wheel_Length 13.5_in //Distance between omni wheels
 #define Tracking_Length 13_in //Distance between tracking wheels
 #define Tracking_Diameter 2.75_in //Wheel diameter of tracking wheel
 #define Middle_Length 0.75_in //Distance of the middle tracking wheel to the center of turning
@@ -33,24 +35,16 @@
 
 /* ********** Other Parameters ********** */
 
-#define Arm_kP 0.5f
+#define Arm_kP 1.0f
 
 /* ********** Drivetrain ********** */
 
 //Generates the chassis needed to use Okapi's built in PIDs, odometry, and 2D motion profiling
 auto Chassis = ChassisControllerBuilder()
   .withMotors(LeftSide, RightSide)
-  .withGains({Distance_kP, Distance_kI, Distance_kD}, //Distance controller gains
-             {Turn_kP, Turn_kI, Turn_kD}, //Turn controller gains
-             {Angle_kP, Angle_kI, Angle_kD})  //Angle controller gains (helps drive straight)
-  .withDerivativeFilters(
-      std::make_unique<AverageFilter<3>>(), //Distance controller filter
-      std::make_unique<AverageFilter<3>>(), //Turn controller filter
-      std::make_unique<AverageFilter<3>>())  //Angle controller filter
-  .withClosedLoopControllerTimeUtil(100, 5, 150_ms) //Min error, min error derivative and min time at error to be considered settled
   .withSensors(LeftEnc, RightEnc, MiddleEnc)
-  .withDimensions(AbstractMotor::gearset::green, {{Tracking_Diameter,Tracking_Length,Middle_Length,Tracking_Diameter}, quadEncoderTPR})
-  .withOdometry() //Use the same scales as the chassis (above)
+  .withDimensions(AbstractMotor::gearset::green, {{Wheel_Diameter, Wheel_Length}, imev5GreenTPR})
+  .withOdometry({{Tracking_Length, Tracking_Length, Middle_Length, Tracking_Length}, quadEncoderTPR})
   .buildOdometry();
 
 //Establishes the controller used in Okapi's built in 2D motion profiling
@@ -85,16 +79,7 @@ void Unfold(){
 void ArmHome(int TimeOut){
   int EndTime = Time(TimeOut);
   while (EndTime != pros::millis()){
-    int Error = ArmPot.get() - ArmStart;
-    double Velocity = Error * Arm_kP;
-    if (Error < 5){break;} //Breaks or ends loop if arm reaches position
-    if (Velocity > 200){
-      Velocity = 200; //Maximum arm velocity for down
-    }
-    else if (Velocity < 130){
-      Velocity = 130; //Minimum arm velocity for down
-    }
-    Arm.moveVelocity(-Velocity); //Sets arm velocity
+    Arm.moveVelocity(-200);
     pros::delay(10); //Loop speed, prevents overload
   }
   Arm.setBrakeMode(AbstractMotor::brakeMode::brake); //Set brake mode brake
@@ -106,42 +91,24 @@ void ArmHome(int TimeOut){
 void ArmLowChalice(int TimeOut){
   int EndTime = Time(TimeOut);
   while (EndTime != pros::millis()){
-    int Error = LowChalice - ArmPot.get();
-    double Velocity = Error * Arm_kP;
-    if (Error < 5){break;} //Breaks or ends loop if arm reaches position
-    if (Velocity > 200){
-      Velocity = 200; //Maximum arm velocity for up
-    }
-    else if (Velocity < 120){
-      Velocity = 120; //Minimum arm velocity for up
-    }
-    Arm.moveVelocity(Velocity); //Sets arm velocity
+    Arm.moveVelocity(150);
     pros::delay(10); //Loop speed, prevents overload
   }
-  Arm.setBrakeMode(AbstractMotor::brakeMode::hold); //Set brake mode hold
+  Arm.setBrakeMode(AbstractMotor::brakeMode::brake); //Set brake mode brake
   Arm.moveVelocity(0); //Stops arm
-  }
+}
 
 //Moves the arm to the medium chalice position
 //Time out in milliseconds
 void ArmMediumChalice(int TimeOut){
   int EndTime = Time(TimeOut);
   while (EndTime != pros::millis()){
-    int Error = MediumChalice - ArmPot.get();
-    double Velocity = Error * Arm_kP;
-    if (Error < 5){break;} //Breaks or ends loop if arm reaches position
-    if (Velocity > 200){
-      Velocity = 200; //Maximum arm velocity for up
-    }
-    else if (Velocity < 120){
-      Velocity = 120; //Minimum arm velocity for up
-    }
-    Arm.moveVelocity(-Velocity); //Sets arm velocity
+    Arm.moveVelocity(150);
     pros::delay(10); //Loop speed, prevents overload
   }
-  Arm.setBrakeMode(AbstractMotor::brakeMode::hold); //Set brake mode hold
+  Arm.setBrakeMode(AbstractMotor::brakeMode::brake); //Set brake mode brake
   Arm.moveVelocity(0); //Stops arm
-  }
+}
 
 /* ********** Angler Voids ********** */
 
