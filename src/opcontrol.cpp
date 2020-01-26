@@ -1,6 +1,18 @@
 #include "main.h"
-#include "define.hpp"
-#include "robot.hpp"
+#include "setup/define.hpp"
+#include "setup/robot.hpp"
+#include "odomDebug/odomDebug.hpp"
+
+void setState(OdomDebug::state_t state){
+  Chassis->setState({Chassis->getState().x, Chassis->getState().y, Chassis->getState().theta});
+}
+
+void resetSensors(){
+  LeftEnc.reset();
+  RightEnc.reset();
+  MiddleEnc.reset();
+  Chassis->setState({0_in, 0_in, 0_deg});
+}
 
 void opcontrol(){
 
@@ -25,21 +37,20 @@ void opcontrol(){
   Chassis->getModel()->setMaxVoltage(12000); //Makes sure to reset the voltage to the maximum on the drivetrain
   Chassis->getModel()->setBrakeMode(AbstractMotor::brakeMode::brake); //Sets brake mode brake on drivetrain
   Chassis->setState({0_ft,0_ft,0_deg});
-  bool TrayDown = false;
+  bool TrayDown = true;
+
+  OdomDebug display(lv_scr_act(), LV_COLOR_ORANGE);
+  display.setStateCallback(setState);
+  display.setResetCallback(resetSensors);
 
   while(1){
+
+    //Displays the robot position on the cortex screen
+    display.setData({Chassis->getState().x, Chassis->getState().y, Chassis->getState().theta}, {LeftEnc.get(), RightEnc.get(), MiddleEnc.get()});
+
     /*if (ButtonDown.isPressed()){
       Unfold();
     }*/
-
-    /* ********** Sensor Testing ********** */
-    //Used to make sure sensors and work by printing their value to the lcd display
-
-    /*pros::lcd::print(1, "Encoder Left: %lf", LeftEnc.get());
-    pros::lcd::print(2, "Encoder Right: %lf", RightEnc.get());
-    pros::lcd::print(3, "Encoder Middle: %lf", MiddleEnc.get());
-    pros::lcd::print(4, "Angler Pot: %lf", AnglerPot.get());
-    pros::lcd::print(5, "Arm Pot: %lf", ArmPot.get());*/
 
     /* ********** Drivetrain Control ********** */
 

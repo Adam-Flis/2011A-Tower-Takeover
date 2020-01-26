@@ -1,6 +1,6 @@
 #include "main.h"
-#include "robot.hpp"
-#include "define.hpp"
+#include "setup/define.hpp"
+#include "setup/robot.hpp"
 
 //USed for testing commands and tuning PIDs
 void Test(){

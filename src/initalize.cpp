@@ -1,9 +1,8 @@
 #include "main.h"
-#include "robot.hpp"
+#include "setup/robot.hpp"
 
 //Code that runs when you start the program
 void initialize(){
-  pros::lcd::initialize();
   /*ProfileController->generatePath({{0_ft, 0_ft, 0_deg}, {1.4_ft, 1.8_ft, 0_deg}}, "A");
   ProfileController->storePath("/usd/A.csv", "A");*/
 

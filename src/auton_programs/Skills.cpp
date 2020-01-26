@@ -1,6 +1,6 @@
 #include "main.h"
-#include "robot.hpp"
-#include "define.hpp"
+#include "setup/define.hpp"
+#include "setup/robot.hpp"
 
 //Collects 16 cubes from the field and sets 3 cubes in challices
 //Points scored: 64

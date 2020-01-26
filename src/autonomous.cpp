@@ -1,6 +1,6 @@
 #include "main.h"
-#include "robot.hpp"
-#include "auton_programs.hpp"
+#include "setup/robot.hpp"
+#include "auton_programs/auton_programs.hpp"
 
  void autonomous(){
 

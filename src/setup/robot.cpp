@@ -1,5 +1,5 @@
 #include "main.h"
-#include "define.hpp"
+#include "setup/define.hpp"
 
 /* ********** Chassis Builder Parameters ********** */
 

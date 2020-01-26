@@ -1,6 +1,6 @@
 #include "main.h"
-#include "robot.hpp"
-#include "define.hpp"
+#include "setup/define.hpp"
+#include "setup/robot.hpp"
 
 //Collects 6 cubes from the field
 //Places cubes into the small scoring zone
