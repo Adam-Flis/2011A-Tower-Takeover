@@ -53,7 +53,7 @@ Controller Main(ControllerId::master);
 
 /* ********** Angler Variables ********** */
 
-int AnglerPotMin = 1195;
+int AnglerPotMin = 1250;
 int AnglerPotMax = 3195;
 float Angler_kP = 9.2;
 

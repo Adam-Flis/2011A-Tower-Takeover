@@ -4,10 +4,10 @@
 /* ********** Chassis Builder Parameters ********** */
 
 #define Wheel_Diameter 4_in //Wheel diameter of omni wheels
-#define Wheel_Length 13.5_in //Distance between omni wheels
+#define Wheel_Length 13_in //Distance between omni wheels
 #define Tracking_Length 13_in //Distance between tracking wheels
 #define Tracking_Diameter 2.75_in //Wheel diameter of tracking wheel
-#define Middle_Length 0.75_in //Distance of the middle tracking wheel to the center of turning
+#define Middle_Length 1.0_in //Distance of the middle tracking wheel to the center of turning
 
 /* ********** Distance PID Parameters ********** */
 

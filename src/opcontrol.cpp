@@ -2,7 +2,6 @@
 #include "define.hpp"
 #include "robot.hpp"
 
-
 void opcontrol(){
 
   /* ********** Declares Controller Buttons ********** */
@@ -29,7 +28,6 @@ void opcontrol(){
   bool TrayDown = false;
 
   while(1){
-
     /*if (ButtonDown.isPressed()){
       Unfold();
     }*/
@@ -70,18 +68,19 @@ void opcontrol(){
       Arm.moveVelocity(-200);
     }
     else { //Sets brake mode and stops arm when buttons R1 & R2 are not pressed
- 			if (ArmPot.get() > ArmHold) { //Set brake mode hold if over certain value
+      Arm.setBrakeMode(AbstractMotor::brakeMode::hold);
+ 			/*if (ArmPot.get() > ArmHold) { //Set brake mode hold if over certain value
  				Arm.setBrakeMode(AbstractMotor::brakeMode::hold);
  			}
  			else { //Set brake mode if anything else
  				Arm.setBrakeMode(AbstractMotor::brakeMode::brake);
- 			}
+ 			}*/
  			Arm.moveVelocity(0); //Stops arm
  		}
 
     /* ********** Angler Control ********** */
 
-    if (ButtonB.changedToPressed()){
+    if (ButtonY.changedToPressed()){
       TrayDown = !TrayDown;
     }
 
@@ -97,6 +96,17 @@ void opcontrol(){
       Angler.moveVoltage(Voltage); //Sets angler voltage
 		}
     else if (TrayDown == true && AnglerPot.get() > AnglerPotMin){ //Button B pressed, lower tray
+      int Error = AnglerPot.get() - AnglerPotMin;
+      double Voltage = Error * Angler_kP;
+      if (Voltage > 12000){
+        Voltage = 12000; //Maximum angler voltage for going down
+      }
+      else if (Voltage < 8000){
+        Voltage = 8000; //Minimum angler voltage for going down
+      }
+      Angler.moveVoltage(-Voltage); //Sets angler voltage
+		}
+    else if (ButtonB.isPressed() && AnglerPot.get() > AnglerPotMin){ //Button B pressed, lower tray
       int Error = AnglerPot.get() - AnglerPotMin;
       double Voltage = Error * Angler_kP;
       if (Voltage > 12000){
