@@ -12,12 +12,11 @@ extern std::shared_ptr<AsyncMotionProfileController> ProfileController;
 
 int Time(int TimeIn);
 void Unfold();
+void DriveVel(int Velocity);
 
 /* ********** Arm Voids ********** */
 
-void ArmHome(int TimeOut);
-void ArmLowChalice(int TimeOut);
-void ArmMediumChalice(int TimeOut);
+void ArmMove(int Position, int TimeOut);
 
 /* ********** Angler Voids ********** */
 

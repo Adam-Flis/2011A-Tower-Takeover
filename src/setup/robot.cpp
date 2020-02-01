@@ -4,8 +4,8 @@
 /* ********** Chassis Builder Parameters ********** */
 
 #define Wheel_Diameter 4_in //Wheel diameter of omni wheels
-#define Wheel_Length 13_in //Distance between omni wheels
-#define Tracking_Length 13_in //Distance between tracking wheels
+#define Wheel_Length 11_in //Distance between omni wheels
+#define Tracking_Length 10.5_in //Distance between tracking wheels
 #define Tracking_Diameter 2.75_in //Wheel diameter of tracking wheel
 #define Middle_Length 1.0_in //Distance of the middle tracking wheel to the center of turning
 
@@ -35,7 +35,7 @@
 
 /* ********** Other Parameters ********** */
 
-#define Arm_kP 1.0f
+#define Arm_kP 0.8f
 
 /* ********** Drivetrain ********** */
 
@@ -43,7 +43,7 @@
 auto Chassis = ChassisControllerBuilder()
   .withMotors(LeftSide, RightSide)
   .withSensors(LeftEnc, RightEnc, MiddleEnc)
-  .withDimensions(AbstractMotor::gearset::green, {{Wheel_Diameter, Wheel_Length}, imev5GreenTPR})
+  .withDimensions(AbstractMotor::gearset::green, {{Wheel_Diameter, Wheel_Length}, (imev5GreenTPR * 4) / 5})
   .withOdometry({{Tracking_Length, Tracking_Length, Middle_Length, Tracking_Length}, quadEncoderTPR})
   .buildOdometry();
 
@@ -68,45 +68,47 @@ void Unfold(){
   pros::delay(800);
   Arm.moveVelocity(-200);
   pros::delay(950);
-  Arm.setBrakeMode(AbstractMotor::brakeMode::brake);
+  Arm.setBrakeMode(AbstractMotor::brakeMode::hold);
   Arm.moveVelocity(0);
+}
+
+//Sets velocity of drivetrain
+void DriveVel(int Velocity){
+  LeftSide.moveVelocity(Velocity);
+  RightSide.moveVelocity(Velocity);
 }
 
 /* ********** Arm Voids ********** */
 
-//Moves the arm to the home/start position
+//Moves the arm to set position
+//Position in  arm potentiometer counts
 //Time out in milliseconds
-void ArmHome(int TimeOut){
+void ArmMove(int Position, int TimeOut){
   int EndTime = Time(TimeOut);
   while (EndTime != pros::millis()){
-    Arm.moveVelocity(-200);
+    int Error = abs(Position - ArmPot.get());
+    double Velocity = Error * Arm_kP;
+    if (Error < 5){break;} //Breaks or ends loop if angler reaches position
+    if (Velocity > 200){
+      Velocity = 200; //Maximum arm velocity
+    }
+    else if (Velocity < 120){
+      Velocity = 140; //Minimum arm velocity
+    }
+    if (Position - ArmPot.get() < 0){ //Checks to see if number if negative
+      Arm.moveVelocity(-Velocity); //Sets arm velocity (- going down)
+    }
+    else {
+      Arm.moveVelocity(Velocity); //Sets arm velocity (+ going up)
+    }
     pros::delay(10); //Loop speed, prevents overload
   }
-  Arm.setBrakeMode(AbstractMotor::brakeMode::brake); //Set brake mode brake
-  Arm.moveVelocity(0); //Stops arm
-}
-
-//Moves the arm to the low chalice position
-//Time out in milliseconds
-void ArmLowChalice(int TimeOut){
-  int EndTime = Time(TimeOut);
-  while (EndTime != pros::millis()){
-    Arm.moveVelocity(150);
-    pros::delay(10); //Loop speed, prevents overload
+  if (ArmPot.get() > ArmHold){ //Set brake mode hold if over certain value
+    Arm.setBrakeMode(AbstractMotor::brakeMode::hold);
   }
-  Arm.setBrakeMode(AbstractMotor::brakeMode::brake); //Set brake mode brake
-  Arm.moveVelocity(0); //Stops arm
-}
-
-//Moves the arm to the medium chalice position
-//Time out in milliseconds
-void ArmMediumChalice(int TimeOut){
-  int EndTime = Time(TimeOut);
-  while (EndTime != pros::millis()){
-    Arm.moveVelocity(150);
-    pros::delay(10); //Loop speed, prevents overload
+  else { //Set brake mode if anything else
+    Arm.setBrakeMode(AbstractMotor::brakeMode::brake);
   }
-  Arm.setBrakeMode(AbstractMotor::brakeMode::brake); //Set brake mode brake
   Arm.moveVelocity(0); //Stops arm
 }
 
@@ -129,7 +131,7 @@ void AnglerHome(int TimeOut){
     Angler.moveVoltage(-Voltage); //Sets angler voltage
     pros::delay(10); //Loop speed, prevents overload
   }
-  Angler.setBrakeMode(AbstractMotor::brakeMode::brake); //Set brake mode brake
+  Angler.setBrakeMode(AbstractMotor::brakeMode::coast); //Set brake mode coast
   Angler.moveVelocity(0); //Stops angler
 }
 
