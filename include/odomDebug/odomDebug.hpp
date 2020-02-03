@@ -14,18 +14,18 @@ public:
     QLength y {0.0};
     QAngle theta {0.0};
 
-    /** 
+    /**
      * @param ix QLength
      * @param iy QLength
      * @param itheta QAngle
-     */ 
+     */
     state_t(QLength ix, QLength iy, QAngle itheta);
 
-    /** 
+    /**
      * @param ix inches
      * @param iy inches
      * @param itheta radians
-     */ 
+     */
     state_t(double ix, double iy, double itheta);
   };
 
@@ -95,11 +95,11 @@ public:
 private:
 
   // parent container
-  lv_obj_t* container = nullptr; 
+  lv_obj_t* container = nullptr;
   lv_style_t cStyle;
 
   // field
-  lv_style_t fStyle; 
+  lv_style_t fStyle;
   double fieldDim = 0; // width and height of field container
 
   // tile styles
@@ -108,11 +108,11 @@ private:
   lv_style_t blue;
 
   // robot point
-  lv_obj_t* led = nullptr; 
+  lv_obj_t* led = nullptr;
   lv_style_t ledStyle;
 
   // robot line
-  lv_obj_t* line = nullptr; 
+  lv_obj_t* line = nullptr;
   lv_style_t lineStyle;
   std::vector<lv_point_t> linePoints = {{0, 0}, {0, 0}}; // line positions
   int lineWidth = 0;
@@ -134,4 +134,3 @@ private:
   static lv_res_t resetAction(lv_obj_t*); // action when reset button is pressed
 
 };
-

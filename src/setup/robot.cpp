@@ -4,8 +4,8 @@
 /* ********** Chassis Builder Parameters ********** */
 
 #define Wheel_Diameter 4_in //Wheel diameter of omni wheels
-#define Wheel_Length 11_in //Distance between omni wheels
-#define Tracking_Length 10.5_in //Distance between tracking wheels
+#define Wheel_Length 9_in //Distance between omni wheels
+#define Tracking_Length 8.5_in //Distance between tracking wheels
 #define Tracking_Diameter 2.75_in //Wheel diameter of tracking wheel
 #define Middle_Length 1.0_in //Distance of the middle tracking wheel to the center of turning
 
@@ -35,7 +35,7 @@
 
 /* ********** Other Parameters ********** */
 
-#define Arm_kP 0.8f
+#define Arm_kP 0.1f
 
 /* ********** Drivetrain ********** */
 
@@ -43,8 +43,17 @@
 auto Chassis = ChassisControllerBuilder()
   .withMotors(LeftSide, RightSide)
   .withSensors(LeftEnc, RightEnc, MiddleEnc)
-  .withDimensions(AbstractMotor::gearset::green, {{Wheel_Diameter, Wheel_Length}, (imev5GreenTPR * 4) / 5})
-  .withOdometry({{Tracking_Length, Tracking_Length, Middle_Length, Tracking_Length}, quadEncoderTPR})
+  .withGains(
+      {Distance_kP, Distance_kI, Distance_kD}, //Distance controller gains
+      {Turn_kP, Turn_kI, Turn_kD}, //Turn controller gains
+      {Angle_kP, Angle_kI, Angle_kD})  //Angle controller gains (helps drive straight)
+  .withDerivativeFilters(
+      std::make_unique<AverageFilter<3>>(),//Distance controller filter
+      std::make_unique<AverageFilter<3>>(), //Turn controller filter
+      std::make_unique<AverageFilter<3>>()) //Angle controller filter
+  .withClosedLoopControllerTimeUtil(50, __DBL_MAX__, 0_ms) //Min error, min error derivative and min time at error to be considered settled
+  .withDimensions(AbstractMotor::gearset::green, {{Tracking_Diameter, Tracking_Length, Middle_Length, Tracking_Diameter}, quadEncoderTPR})
+  .withOdometry() //Use the same scales as the chassis (above)
   .buildOdometry();
 
 //Establishes the controller used in Okapi's built in 2D motion profiling
@@ -80,27 +89,49 @@ void DriveVel(int Velocity){
 
 /* ********** Arm Voids ********** */
 
-//Moves the arm to set position
+//Moves the arm up to set position
 //Position in  arm potentiometer counts
 //Time out in milliseconds
-void ArmMove(int Position, int TimeOut){
+void ArmUp(int Position, int TimeOut){
   int EndTime = Time(TimeOut);
   while (EndTime != pros::millis()){
-    int Error = abs(Position - ArmPot.get());
+    int Error = Position - ArmPot.get();
     double Velocity = Error * Arm_kP;
     if (Error < 5){break;} //Breaks or ends loop if angler reaches position
     if (Velocity > 200){
       Velocity = 200; //Maximum arm velocity
     }
     else if (Velocity < 120){
-      Velocity = 140; //Minimum arm velocity
+      Velocity = 120; //Minimum arm velocity
     }
-    if (Position - ArmPot.get() < 0){ //Checks to see if number if negative
-      Arm.moveVelocity(-Velocity); //Sets arm velocity (- going down)
+    Arm.moveVelocity(Velocity); //Sets arm velocity
+    pros::delay(10); //Loop speed, prevents overload
+  }
+  if (ArmPot.get() > ArmHold){ //Set brake mode hold if over certain value
+    Arm.setBrakeMode(AbstractMotor::brakeMode::hold);
+  }
+  else { //Set brake mode if anything else
+    Arm.setBrakeMode(AbstractMotor::brakeMode::brake);
+  }
+  Arm.moveVelocity(0); //Stops arm
+}
+
+//Moves the arm down to set position
+//Position in  arm potentiometer counts
+//Time out in milliseconds
+void ArmDown(int Position, int TimeOut){
+  int EndTime = Time(TimeOut);
+  while (EndTime != pros::millis()){
+    int Error = abs(ArmPot.get() - Position);
+    double Velocity = Error * Arm_kP;
+    if (Error < 5){break;} //Breaks or ends loop if angler reaches position
+    if (Velocity > 200){
+      Velocity = 200; //Maximum arm velocity
     }
-    else {
-      Arm.moveVelocity(Velocity); //Sets arm velocity (+ going up)
+    else if (Velocity < 160){
+      Velocity = 160; //Minimum arm velocity
     }
+    Arm.moveVelocity(-Velocity); //Sets arm velocity
     pros::delay(10); //Loop speed, prevents overload
   }
   if (ArmPot.get() > ArmHold){ //Set brake mode hold if over certain value

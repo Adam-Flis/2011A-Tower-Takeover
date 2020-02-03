@@ -2,25 +2,25 @@
 
 /* ********** Define Motor Ports ********** */
 
-#define LFD_Port 15
-#define LBD_Port 16
-#define RFD_Port 17
-#define RBD_Port 18
-#define Angler_Port 13
-#define Arm_Port 5
-#define Cube_Intake_Left_Port 1
-#define Cube_Intake_Right_Port 3
+#define LFD_Port 2
+#define LBD_Port 3
+#define RFD_Port 10
+#define RBD_Port 9
+#define Angler_Port 8
+#define Arm_Port 11
+#define Cube_Intake_Left_Port 12
+#define Cube_Intake_Right_Port 13
 
 /* ********** Define Sensor Ports ********** */
 
-#define Left_Encoder_Top_Port 'e'
-#define Left_Encoder_Bottom_Port 'f'
+#define Left_Encoder_Top_Port 'a'
+#define Left_Encoder_Bottom_Port 'b'
 #define Right_Encoder_Top_Port 'c'
 #define Right_Encoder_Bottom_Port 'd'
-#define Middle_Encoder_Top_Port 'g'
-#define Middle_Encoder_Bottomm_Port 'h'
-#define Angler_Potentiomenter_Port 'b'
-#define Arm_Potentiometer_Port 'a'
+#define Middle_Encoder_Top_Port 'e'
+#define Middle_Encoder_Bottomm_Port 'f'
+#define Angler_Potentiomenter_Port 'g'
+#define Arm_Potentiometer_Port 'h'
 
 /* ********** Creates Motors ********** */
 
@@ -53,13 +53,13 @@ Controller Main(ControllerId::master);
 
 /* ********** Angler Variables ********** */
 
-int AnglerPotMin = 1240;
+int AnglerPotMin = 1150;
 int AnglerPotMax = 3195;
 float Angler_kP = 9.2;
 
 /* ********** Arm Variables ********** */
 
-int ArmHold = 1085;
+int ArmHold = 1100;
 int LowChalice = 1695;
 int MediumChalice = 2300;
-int ArmStart = 665;
+int ArmStart = 690;

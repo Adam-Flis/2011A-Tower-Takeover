@@ -16,7 +16,8 @@ void DriveVel(int Velocity);
 
 /* ********** Arm Voids ********** */
 
-void ArmMove(int Position, int TimeOut);
+void ArmUp(int Position, int TimeOut);
+void ArmDown(int Position, int TimeOut);
 
 /* ********** Angler Voids ********** */
 

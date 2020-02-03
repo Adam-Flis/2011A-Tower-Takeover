@@ -8,10 +8,10 @@ void setState(OdomDebug::state_t state){
 }
 
 void resetSensors(){
+  Chassis->setState({0_in, 0_in, 0_deg});
   LeftEnc.reset();
   RightEnc.reset();
   MiddleEnc.reset();
-  Chassis->setState({0_in, 0_in, 0_deg});
 }
 
 void opcontrol(){
@@ -33,10 +33,10 @@ void opcontrol(){
 
   ProfileController->flipDisable(true); //Disables the profile controller, prevents it from trying to run during operator control
   Chassis->stop(); //Stops the drivetrain motors from running in the background
-  Chassis->setMaxVelocity(200); //Makes sure to reset the velocity to the maximum on the drivetrain
+  Chassis->setMaxVelocity(100); //Makes sure to reset the velocity to the maximum on the drivetrain
   Chassis->getModel()->setMaxVoltage(12000); //Makes sure to reset the voltage to the maximum on the drivetrain
   Chassis->getModel()->setBrakeMode(AbstractMotor::brakeMode::brake); //Sets brake mode brake on drivetrain
-  Chassis->setState({0_ft,0_ft,0_deg});
+  Chassis->setState({0_in, 0_in, 0_deg});
   bool TrayDown = true;
 
   OdomDebug display(lv_scr_act(), LV_COLOR_ORANGE);
@@ -104,7 +104,7 @@ void opcontrol(){
       }
       Angler.moveVoltage(Voltage); //Sets angler voltage
 		}
-    else if (AnglerPot.get() < AnglerPotMax){
+    else if (AnglerPot.get() > AnglerPotMin){
       if (ButtonA.isPressed() || TrayDown == true){ //Button A pressed or TrayDown true, lower tray
         int Error = AnglerPot.get() - AnglerPotMin;
         double Voltage = Error * Angler_kP;
