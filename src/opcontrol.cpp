@@ -33,7 +33,7 @@ void opcontrol(){
 
   ProfileController->flipDisable(true); //Disables the profile controller, prevents it from trying to run during operator control
   Chassis->stop(); //Stops the drivetrain motors from running in the background
-  Chassis->setMaxVelocity(100); //Makes sure to reset the velocity to the maximum on the drivetrain
+  Chassis->setMaxVelocity(200); //Makes sure to reset the velocity to the maximum on the drivetrain
   Chassis->getModel()->setMaxVoltage(12000); //Makes sure to reset the voltage to the maximum on the drivetrain
   Chassis->getModel()->setBrakeMode(AbstractMotor::brakeMode::brake); //Sets brake mode brake on drivetrain
   Chassis->setState({0_in, 0_in, 0_deg});
