@@ -7,7 +7,7 @@
 #define Wheel_Length 9_in //Distance between omni wheels
 #define Tracking_Length 8.5_in //Distance between tracking wheels
 #define Tracking_Diameter 2.75_in //Wheel diameter of tracking wheel
-#define Middle_Length 1.0_in //Distance of the middle tracking wheel to the center of turning
+#define Middle_Length 2.0_in //Distance of the middle tracking wheel to the center of turning
 
 /* ********** Distance PID Parameters ********** */
 
@@ -43,17 +43,8 @@
 auto Chassis = ChassisControllerBuilder()
   .withMotors(LeftSide, RightSide)
   .withSensors(LeftEnc, RightEnc, MiddleEnc)
-  .withGains(
-      {Distance_kP, Distance_kI, Distance_kD}, //Distance controller gains
-      {Turn_kP, Turn_kI, Turn_kD}, //Turn controller gains
-      {Angle_kP, Angle_kI, Angle_kD})  //Angle controller gains (helps drive straight)
-  .withDerivativeFilters(
-      std::make_unique<AverageFilter<3>>(),//Distance controller filter
-      std::make_unique<AverageFilter<3>>(), //Turn controller filter
-      std::make_unique<AverageFilter<3>>()) //Angle controller filter
-  .withClosedLoopControllerTimeUtil(50, __DBL_MAX__, 0_ms) //Min error, min error derivative and min time at error to be considered settled
-  .withDimensions(AbstractMotor::gearset::green, {{Tracking_Diameter, Tracking_Length, Middle_Length, Tracking_Diameter}, quadEncoderTPR})
-  .withOdometry() //Use the same scales as the chassis (above)
+  .withDimensions(AbstractMotor::gearset::green, {{Wheel_Diameter, Wheel_Length}, (imev5GreenTPR * 4) / 5})
+  .withOdometry({{Tracking_Length, Tracking_Length, Middle_Length, Tracking_Length}, quadEncoderTPR})
   .buildOdometry();
 
 //Establishes the controller used in Okapi's built in 2D motion profiling
@@ -61,6 +52,7 @@ auto ProfileController = AsyncMotionProfileControllerBuilder()
   .withLimits({Max_Linear_Velocity, Max_Linear_Acceleration, Max_Linear_Jerk})
   .withOutput(Chassis)
   .buildMotionProfileController();
+
 
 /* ********** Other ********** */
 
@@ -74,9 +66,9 @@ int Time(int TimeInput){
 //Unfolds the tray during the autonomous period
 void Unfold(){
   Arm.moveVelocity(200);
-  pros::delay(800);
+  pros::delay(650);
   Arm.moveVelocity(-200);
-  pros::delay(950);
+  pros::delay(750);
   Arm.setBrakeMode(AbstractMotor::brakeMode::hold);
   Arm.moveVelocity(0);
 }

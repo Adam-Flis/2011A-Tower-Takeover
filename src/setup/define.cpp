@@ -8,8 +8,8 @@
 #define RBD_Port 9
 #define Angler_Port 8
 #define Arm_Port 11
-#define Cube_Intake_Left_Port 12
-#define Cube_Intake_Right_Port 13
+#define Cube_Intake_Left_Port 14
+#define Cube_Intake_Right_Port 12
 
 /* ********** Define Sensor Ports ********** */
 
@@ -53,8 +53,8 @@ Controller Main(ControllerId::master);
 
 /* ********** Angler Variables ********** */
 
-int AnglerPotMin = 1150;
-int AnglerPotMax = 3195;
+int AnglerPotMin = 1200;
+int AnglerPotMax = 3000;
 float Angler_kP = 9.2;
 
 /* ********** Arm Variables ********** */

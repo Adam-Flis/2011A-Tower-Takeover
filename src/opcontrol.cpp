@@ -39,14 +39,14 @@ void opcontrol(){
   Chassis->setState({0_in, 0_in, 0_deg});
   bool TrayDown = true;
 
-  OdomDebug display(lv_scr_act(), LV_COLOR_ORANGE);
-  display.setStateCallback(setState);
-  display.setResetCallback(resetSensors);
+  //OdomDebug display(lv_scr_act(), LV_COLOR_ORANGE);
+  //display.setStateCallback(setState);
+  //display.setResetCallback(resetSensors);
 
   while(1){
 
     //Displays the robot position on the cortex screen
-    display.setData({Chassis->getState().x, Chassis->getState().y, Chassis->getState().theta}, {LeftEnc.get(), RightEnc.get(), MiddleEnc.get()});
+    //display.setData({Chassis->getState().x, Chassis->getState().y, Chassis->getState().theta}, {LeftEnc.get(), RightEnc.get(), MiddleEnc.get()});
 
     /*if (ButtonDown.isPressed()){
       Unfold();
@@ -60,10 +60,10 @@ void opcontrol(){
     /* ********** Cube Intake Control ********** */
 
     if (ButtonL1.isPressed()){ //Button left 1 pressed, intake cubes
-      Intake.moveVoltage(12000);
+      Intake.moveVelocity(200);
     }
     else if (ButtonL2.isPressed()){ //Button left 2 pressed, outtake cubes
-      Intake.moveVoltage(-12000);
+      Intake.moveVelocity(-200);
     }
     else { //Sets brake mode and stops cube intake when buttons L1 & L2 are not pressed
       Intake.setBrakeMode(AbstractMotor::brakeMode::brake); //Set brake mode brake
@@ -102,20 +102,30 @@ void opcontrol(){
       else if (Voltage < 4000){
         Voltage = 4000; //Minimum angler voltage for going up
       }
+      TrayDown = false;
       Angler.moveVoltage(Voltage); //Sets angler voltage
 		}
-    else if (AnglerPot.get() > AnglerPotMin){
-      if (ButtonA.isPressed() || TrayDown == true){ //Button A pressed or TrayDown true, lower tray
-        int Error = AnglerPot.get() - AnglerPotMin;
-        double Voltage = Error * Angler_kP;
-        if (Voltage > 12000){
+    else if (ButtonB.isPressed() && AnglerPot.get() > AnglerPotMin){  //Button B pressed, lower tray
+      int Error = AnglerPot.get() - AnglerPotMin;
+      double Voltage = Error * Angler_kP;
+      if (Voltage > 12000){
           Voltage = 12000; //Maximum angler voltage for going down
-        }
-        else if (Voltage < 8000){
-          Voltage = 8000; //Minimum angler voltage for going down
-        }
-        Angler.moveVoltage(-Voltage); //Sets angler voltage
       }
+      else if (Voltage < 8000){
+        Voltage = 8000; //Minimum angler voltage for going down
+      }
+      Angler.moveVoltage(-Voltage); //Sets angler voltage
+    }
+    else if (TrayDown == true && AnglerPot.get() > AnglerPotMin){ //TrayDown = true, lower tray
+      int Error = AnglerPot.get() - AnglerPotMin;
+      double Voltage = Error * Angler_kP;
+      if (Voltage > 12000){
+        Voltage = 12000; //Maximum angler voltage for going down
+      }
+      else if (Voltage < 8000){
+        Voltage = 8000; //Minimum angler voltage for going down
+      }
+      Angler.moveVoltage(-Voltage); //Sets angler voltage
     }
     else { //Sets brake mode and stops tray when buttons A & B are not pressed & TrayDown = false
       if(AnglerPot.get() > (AnglerPotMax/2)){ //Set brake mode hold if over certain value

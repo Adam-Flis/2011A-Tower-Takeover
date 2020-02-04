@@ -7,7 +7,7 @@
    /* ********** Blue Side ********** */
 
    //BlueBig();
-   //BlueSmall();
+   BlueSmall();
 
    /* ********** Red Side ********** */
 
@@ -16,7 +16,7 @@
 
    /* ********** Universal ********** */
 
-   Universal();
+  //Universal();
 
    /* ********** Skills ********** */
 

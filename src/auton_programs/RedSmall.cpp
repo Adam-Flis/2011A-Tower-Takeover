@@ -7,32 +7,29 @@
 //Points scored: 6
 void RedSmall(){
 
-  //Unfolds tray and sets state
-  Chassis->setState({0_in, 0_in, 0_deg});
-  Chassis->setMaxVelocity(40);
-  Chassis->moveDistance(6_in);
+  DriveVel(-10);
   Unfold();
-  Intake.moveVelocity(200);
   Chassis->getModel()->setBrakeMode(AbstractMotor::brakeMode::brake);
-  Arm.setBrakeMode(AbstractMotor::brakeMode::hold);
+  DriveVel(0);
+  Intake.moveVelocity(200);
   pros::delay(200);
 
   //Intakes 1st line of cubes
   Chassis->setMaxVelocity(60);
-  Chassis->driveToPoint({3.4_ft, 0_ft});
-  Intake.moveVelocity(100);
+  Chassis->moveDistance(3.4_ft);
+  Intake.moveVelocity(60);
 
   //Turn at scoring zone
-  Chassis->turnAngle(150_deg);
+  Chassis->setMaxVelocity(120);
+  Chassis->turnAngle(185_deg);
 
   //Drive at scoring zone
-  Chassis->setMaxVelocity(90);
-  Chassis->moveDistanceAsync(3.0_ft);
-  pros::delay(400);
+  Chassis->moveDistanceAsync(2.5_ft);
+  pros::delay(750);
   Intake.moveVelocity(-35);
-  pros::delay(600);
+  pros::delay(450);
   Chassis->setMaxVelocity(40);
-  pros::delay(400);
+  pros::delay(500);
   Chassis->stop();
 
   //Score cubes

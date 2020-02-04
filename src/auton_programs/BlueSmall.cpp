@@ -6,9 +6,8 @@
 //Places cubes into the small scoring zone
 //Points scored: 8
 void BlueSmall(){
-  
+
   DriveVel(-10);
-  Chassis->setState({0_in, 0_in, 0_deg});
   Unfold();
   Chassis->getModel()->setBrakeMode(AbstractMotor::brakeMode::brake);
   DriveVel(0);
@@ -17,20 +16,20 @@ void BlueSmall(){
 
   //Intakes 1st line of cubes
   Chassis->setMaxVelocity(60);
-  Chassis->driveToPoint({3.4_ft, 0_ft});
-  Intake.moveVelocity(100);
+  Chassis->moveDistance(3.4_ft);
+  Intake.moveVelocity(60);
 
   //Turn at scoring zone
-  Chassis->turnAngle(-150_deg);
+  Chassis->setMaxVelocity(120);
+  Chassis->turnAngle(-185_deg);
 
   //Drive at scoring zone
-  Chassis->setMaxVelocity(90);
-  Chassis->moveDistanceAsync(3.0_ft);
-  pros::delay(400);
+  Chassis->moveDistanceAsync(2.5_ft);
+  pros::delay(750);
   Intake.moveVelocity(-35);
-  pros::delay(600);
+  pros::delay(450);
   Chassis->setMaxVelocity(40);
-  pros::delay(400);
+  pros::delay(500);
   Chassis->stop();
 
   //Score cubes
