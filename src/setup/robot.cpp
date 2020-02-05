@@ -43,8 +43,17 @@
 auto Chassis = ChassisControllerBuilder()
   .withMotors(LeftSide, RightSide)
   .withSensors(LeftEnc, RightEnc, MiddleEnc)
-  .withDimensions(AbstractMotor::gearset::green, {{Wheel_Diameter, Wheel_Length}, (imev5GreenTPR * 4) / 5})
-  .withOdometry({{Tracking_Length, Tracking_Length, Middle_Length, Tracking_Length}, quadEncoderTPR})
+  .withGains(
+      {Distance_kP, Distance_kI, Distance_kD}, //Distance controller gains
+      {Turn_kP, Turn_kI, Turn_kD}, //Turn controller gains
+      {Angle_kP, Angle_kI, Angle_kD})  //Angle controller gains (helps drive straight)
+  .withDerivativeFilters(
+      std::make_unique<AverageFilter<3>>(),//Distance controller filter
+      std::make_unique<AverageFilter<3>>(), //Turn controller filter
+      std::make_unique<AverageFilter<3>>()) //Angle controller filter
+  .withClosedLoopControllerTimeUtil(50, __DBL_MAX__, 0_ms) //Min error, min error derivative and min time at error to be considered settled
+  .withDimensions(AbstractMotor::gearset::green, {{Tracking_Diameter, Tracking_Length, Middle_Length, Tracking_Diameter}, quadEncoderTPR})
+  .withOdometry() //Use the same scales as the chassis (above)
   .buildOdometry();
 
 //Establishes the controller used in Okapi's built in 2D motion profiling
