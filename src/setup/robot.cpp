@@ -91,7 +91,7 @@ void DriveVel(int Velocity){
 /* ********** Arm Voids ********** */
 
 //Moves the arm up to set position
-//Position in  arm potentiometer counts
+//Position in arm potentiometer counts
 //Time out in milliseconds
 void ArmUp(int Position, int TimeOut){
   int EndTime = Time(TimeOut);
@@ -118,7 +118,7 @@ void ArmUp(int Position, int TimeOut){
 }
 
 //Moves the arm down to set position
-//Position in  arm potentiometer counts
+//Position in arm potentiometer counts
 //Time out in milliseconds
 void ArmDown(int Position, int TimeOut){
   int EndTime = Time(TimeOut);

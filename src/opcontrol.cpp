@@ -114,6 +114,7 @@ void opcontrol(){
       else if (Voltage < 8000){
         Voltage = 8000; //Minimum angler voltage for going down
       }
+      TrayDown = false;
       Angler.moveVoltage(-Voltage); //Sets angler voltage
     }
     else if (TrayDown == true && AnglerPot.get() > AnglerPotMin){ //TrayDown = true, lower tray
