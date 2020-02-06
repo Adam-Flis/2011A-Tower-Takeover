@@ -62,4 +62,4 @@ float Angler_kP = 9.2;
 int ArmHold = 1100;
 int LowChalice = 1695;
 int MediumChalice = 2300;
-int ArmStart = 690;
+int ArmStart = 650;

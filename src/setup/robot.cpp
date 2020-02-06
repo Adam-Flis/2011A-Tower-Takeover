@@ -11,9 +11,9 @@
 
 /* ********** Distance PID Parameters ********** */
 
-#define Distance_kP 0.0008086f
-#define Distance_kI 0.0000034f
-#define Distance_kD 0.00000024f
+#define Distance_kP 0.0014f
+#define Distance_kI 0.00004f
+#define Distance_kD 0.000015f
 
 /* ********** Turn PID Parameters ********** */
 
@@ -48,9 +48,9 @@ auto Chassis = ChassisControllerBuilder()
       {Turn_kP, Turn_kI, Turn_kD}, //Turn controller gains
       {Angle_kP, Angle_kI, Angle_kD})  //Angle controller gains (helps drive straight)
   .withDerivativeFilters(
-      std::make_unique<AverageFilter<3>>(),//Distance controller filter
-      std::make_unique<AverageFilter<3>>(), //Turn controller filter
-      std::make_unique<AverageFilter<3>>()) //Angle controller filter
+      std::make_unique<AverageFilter<5>>(),//Distance controller filter
+      std::make_unique<AverageFilter<5>>(), //Turn controller filter
+      std::make_unique<AverageFilter<5>>()) //Angle controller filter
   .withClosedLoopControllerTimeUtil(50, __DBL_MAX__, 0_ms) //Min error, min error derivative and min time at error to be considered settled
   .withDimensions(AbstractMotor::gearset::green, {{Tracking_Diameter, Tracking_Length, Middle_Length, Tracking_Diameter}, quadEncoderTPR})
   .withOdometry() //Use the same scales as the chassis (above)

@@ -5,6 +5,7 @@
 //USed for testing commands and tuning PIDs
 void Test(){
 
+  Chassis->setMaxVelocity(200);
   Chassis->moveDistance(36_in);
   Chassis->waitUntilSettled();
 
