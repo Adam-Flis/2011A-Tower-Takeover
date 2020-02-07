@@ -17,8 +17,6 @@
 #define Left_Encoder_Bottom_Port 'b'
 #define Right_Encoder_Top_Port 'c'
 #define Right_Encoder_Bottom_Port 'd'
-#define Middle_Encoder_Top_Port 'e'
-#define Middle_Encoder_Bottomm_Port 'f'
 #define Angler_Potentiomenter_Port 'g'
 #define Arm_Potentiometer_Port 'h'
 
@@ -43,7 +41,6 @@ MotorGroup Intake{CIL, CIR};
 
 ADIEncoder LeftEnc(Left_Encoder_Top_Port, Left_Encoder_Bottom_Port, false);
 ADIEncoder RightEnc(Right_Encoder_Top_Port, Right_Encoder_Bottom_Port, true);
-ADIEncoder MiddleEnc(Middle_Encoder_Top_Port, Middle_Encoder_Bottomm_Port, false);
 Potentiometer ArmPot(Arm_Potentiometer_Port);
 Potentiometer AnglerPot(Angler_Potentiomenter_Port);
 

@@ -11,7 +11,6 @@ void resetSensors(){
   Chassis->setState({0_in, 0_in, 0_deg});
   LeftEnc.reset();
   RightEnc.reset();
-  MiddleEnc.reset();
 }
 
 void opcontrol(){
@@ -46,7 +45,7 @@ void opcontrol(){
   while(1){
 
     //Displays the robot position on the cortex screen
-    display.setData({Chassis->getState().x, Chassis->getState().y, Chassis->getState().theta}, {LeftEnc.get(), RightEnc.get(), MiddleEnc.get()});
+    display.setData({Chassis->getState().x, Chassis->getState().y, Chassis->getState().theta}, {LeftEnc.get(), RightEnc.get()});
 
     /*if (ButtonDown.isPressed()){
       Unfold();

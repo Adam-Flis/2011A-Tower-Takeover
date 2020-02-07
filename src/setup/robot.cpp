@@ -42,7 +42,7 @@
 //Generates the chassis needed to use Okapi's built in PIDs, odometry, and 2D motion profiling
 auto Chassis = ChassisControllerBuilder()
   .withMotors(LeftSide, RightSide)
-  .withSensors(LeftEnc, RightEnc, MiddleEnc)
+  .withSensors(LeftEnc, RightEnc)
   .withGains(
       {Distance_kP, Distance_kI, Distance_kD}, //Distance controller gains
       {Turn_kP, Turn_kI, Turn_kD}, //Turn controller gains
