@@ -8,13 +8,13 @@
 void Universal(){
 
   //Drive into scoring zone
-  Chassis->moveDistanceAsync(-36_in);
+  Chassis->moveDistanceAsync(36_in);
   pros::delay(1500);
   Chassis->stop();
 
   //Drive out of scoring zone
-  Chassis->moveDistanceAsync(36_in);
-  pros::delay(700);
+  Chassis->moveDistanceAsync(-36_in);
+  pros::delay(800);
   Chassis->stop();
 
   //Unfolds tray

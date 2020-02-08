@@ -7,52 +7,52 @@
 //Points scored: 6
 void BlueBig(){
 
-  //Unfolds tray
-  Chassis->setState({0_in, 0_in, 0_deg});
-  Unfold();
-  Intake.moveVelocity(200);
+  //Unfold();
   Chassis->getModel()->setBrakeMode(AbstractMotor::brakeMode::brake);
-  Arm.setBrakeMode(AbstractMotor::brakeMode::hold);
+  Arm.moveVelocity(-10);
+  DriveVel(0);
+
+  //Intakes 1st cubes
+  Intake.moveVelocity(200);
+  pros::delay(400);
+  Drive(11, 70, 1000);
   pros::delay(200);
+  Intake.moveVelocity(0);
 
-  //Drive at cube tower
-  Chassis->driveToPoint({3_ft, 0_ft});
-  pros::delay(800);
-
-  //Turn and drive at chalice cube
-  Intake.moveVelocity(100);
-  Chassis->turnToAngle(20_deg);
+  //turn at 3 cube
+  Chassis->setMaxVelocity(90);
+  Chassis->turnAngle(-95_deg);
+  pros::delay(200);
   Intake.moveVelocity(200);
-  Chassis->setMaxVelocity(100);
-  Chassis->moveDistanceAsync(1.5_ft);
-  pros::delay(800);
-  Chassis->stop();
 
-  //Drive away from challice cube
-  Chassis->setMaxVelocity(200);
-  Chassis->driveToPoint({3_ft, 0_ft});
-  Intake.moveVelocity(100);
+  //drive towards cubes
+  Drive(7, 50, 800);
+  pros::delay(200);
+  Chassis->setMaxVelocity(90);
+  Chassis->turnAngle(-55_deg);
+  Intake.moveVelocity(0);
 
-  //Turn and drive at scoring zone
-  pros::delay(500);
-  Chassis->turnToAngle(135_deg);
-  Chassis->moveDistanceAsync(4_ft);
-  pros::delay(500);
+  //drive backward
+  Drive(-11, -60, 1000);
+  Chassis->setMaxVelocity(90);
+  Chassis->turnAngle(235_deg);
+  pros::delay(200);
   Intake.moveVelocity(200);
-  pros::delay(1000);
-  Chassis->setMaxVelocity(100);
-  pros::delay(500);
-  Chassis->stop();
-  Intake.moveVelocity(100);
 
-  //Align on scoring zone
-  LeftSide.moveVelocity(200);
-  Intake.moveVelocity(-30);
-  pros::delay(1000);
-  LeftSide.moveVelocity(0);
-
-  //Score cubes
+  //drive to 4 cubes
+  Drive(11, 50, 1000);
+  pros::delay(200);
+  Chassis->setMaxVelocity(90);
+  Chassis->turnAngle(50_deg);
+  Intake.moveVelocity(0);
+  //drive to zone
+  Intake.moveVelocity(-50);
+  Drive(9, 50, 1000);
   AnglerStack(3000);
-  Chassis->moveDistance(-1_ft);
+
+  //Drive away from scoring zone
+  Drive(-12, -200, 1000);
+
+
 
 }

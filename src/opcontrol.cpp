@@ -38,14 +38,14 @@ void opcontrol(){
   Chassis->setState({0_in, 0_in, 0_deg});
   bool TrayDown = true;
 
-  OdomDebug display(lv_scr_act(), LV_COLOR_ORANGE);
-  display.setStateCallback(setState);
-  display.setResetCallback(resetSensors);
+  //OdomDebug display(lv_scr_act(), LV_COLOR_ORANGE);
+  //display.setStateCallback(setState);
+  //display.setResetCallback(resetSensors);
 
   while(1){
 
     //Displays the robot position on the cortex screen
-    display.setData({Chassis->getState().x, Chassis->getState().y, Chassis->getState().theta}, {LeftEnc.get(), RightEnc.get()});
+    //display.setData({Chassis->getState().x, Chassis->getState().y, Chassis->getState().theta}, {LeftEnc.get(), RightEnc.get()});
 
     /*if (ButtonDown.isPressed()){
       Unfold();
@@ -84,7 +84,7 @@ void opcontrol(){
  			else { //Set brake mode brake if anything else
  				Arm.setBrakeMode(AbstractMotor::brakeMode::brake);
  			}
- 			Arm.moveVelocity(0); //Stops arm
+        Arm.moveVelocity(0); //Stops arm
  		}
 
     /* ********** Angler Control ********** */

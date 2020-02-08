@@ -7,37 +7,27 @@
 //Points scored: 6
 void RedSmall(){
 
-  DriveVel(-10);
-  Unfold();
   Chassis->getModel()->setBrakeMode(AbstractMotor::brakeMode::brake);
-  DriveVel(0);
-  Intake.moveVelocity(200);
-  pros::delay(200);
+  Arm.moveVelocity(-10);
 
   //Intakes 1st line of cubes
-  Chassis->setMaxVelocity(60);
-  Chassis->moveDistance(3.4_ft);
-  Intake.moveVelocity(60);
+  Intake.moveVelocity(200);
+  pros::delay(200);
+  Drive(43, 70, 1500);
 
-  //Turn at scoring zone
-  Chassis->setMaxVelocity(120);
-  Chassis->turnAngle(185_deg);
-
-  //Drive at scoring zone
-  Chassis->moveDistanceAsync(2.5_ft);
-  pros::delay(750);
-  Intake.moveVelocity(-35);
-  pros::delay(450);
-  Chassis->setMaxVelocity(40);
-  pros::delay(500);
-  Chassis->stop();
+  //Drive towards scoring zone
+  Drive(-31, -70, 1500);
+  Intake.moveVelocity(100);
+  Chassis->setMaxVelocity(100);
+  Chassis->turnAngle(140_deg);
 
   //Score cubes
+  Intake.moveVelocity(-40);
+  Drive(4.5, 50, 1200);
   AnglerStack(3000);
-  pros::delay(200);
 
-  //Drive out of zone
-  Chassis->moveDistance(-1_ft);
+  //Drive away from scoring zone
+  Drive(-12, -200, 1000);
 
 
 }

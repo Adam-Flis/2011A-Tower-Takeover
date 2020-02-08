@@ -13,6 +13,7 @@ extern std::shared_ptr<AsyncMotionProfileController> ProfileController;
 int Time(int TimeIn);
 void Unfold();
 void DriveVel(int Velocity);
+void Drive(float Distance, int Velocity, int TimeOut);
 
 /* ********** Arm Voids ********** */
 

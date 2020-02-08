@@ -17,9 +17,9 @@
 
 /* ********** Turn PID Parameters ********** */
 
-#define Turn_kP 0.0008086f
-#define Turn_kI 0.0000034f
-#define Turn_kD 0.00000024f
+#define Turn_kP 0.0014f
+#define Turn_kI 0.00004f
+#define Turn_kD 0.000015f
 
 /* ********** Angle PID Parameters ********** */
 
@@ -86,6 +86,29 @@ void Unfold(){
 void DriveVel(int Velocity){
   LeftSide.moveVelocity(Velocity);
   RightSide.moveVelocity(Velocity);
+}
+
+//360 degrees per rotation of wheel
+//2.75 in diameter wheels
+int inchToInch(float input){
+  float inches = (input * 360)/(2.75 * M_PI);
+  return inches;
+}
+
+//Moves robot
+//Distance in inches (+in forward -in backward)
+//Velocity -200 to 200
+//Timeout in milliseconds
+void Drive(float Distance, int Velocity, int TimeOut){
+  int EndTime = Time(TimeOut);
+  LeftEnc.reset();
+  RightEnc.reset();
+  while (abs((LeftEnc.get() + RightEnc.get()))/2 < abs(inchToInch(Distance))){
+    DriveVel(Velocity);
+    if (EndTime == TimeOut){break;}
+  }
+  Chassis->getModel()->setBrakeMode(AbstractMotor::brakeMode::brake);
+  DriveVel(0);
 }
 
 /* ********** Arm Voids ********** */

@@ -11,66 +11,58 @@ void Skills(){
   //Unfold();
   Chassis->getModel()->setBrakeMode(AbstractMotor::brakeMode::brake);
   DriveVel(0);
-  Intake.moveVelocity(200);
+  Arm.moveVelocity(-10);
+  Chassis->setMaxVelocity(100);
   pros::delay(200);
 
   //Intakes 1st line of cubes
-  Chassis->setMaxVelocity(65);
-  Chassis->moveDistanceAsync({9.8_ft});
-  pros::delay(7000);
-  Chassis->stop();
-  Chassis->moveDistanceAsync(3.0_ft);
-  pros::delay(2500);
-  Chassis->stop();
+  Intake.moveVelocity(200);
+  Drive(110, 65, 6000);
 
   //Go to scoring zone
+  Intake.moveVelocity(0);
+  Drive(-10, -65, 1500);
   Intake.moveVelocity(100);
-  Chassis->setMaxVelocity(150);
-  Chassis->moveDistance({-1_ft});
+  pros::delay(100);
   Chassis->turnAngle(55_deg);
-  Chassis->setMaxVelocity(65);
-  Chassis->moveDistanceAsync(2.0_ft);
-  pros::delay(900);
-  Chassis->stop();
+  pros::delay(100);
+  Drive(14, 40, 1500);
 
   //Score cubes
   Intake.moveVelocity(-30);
   AnglerStack(3000);
 
   //Drive out of scoring zone
-  Chassis->setMaxVelocity(100);
-  Chassis->moveDistance({-2_ft});
+  Drive(-18, 100, 1300);
+  pros::delay(100);
   Chassis->turnAngle(-55_deg);
   Intake.moveVelocity(0);
   AnglerHome(2000);
 
   //Line up on wall
   ArmUp(LowChalice, 2000);
-  Chassis->moveDistanceAsync(3_ft);
-  pros::delay(2500);
-  Chassis->stop();
+  Drive(18, 120, 2300);
 
   //Drive away from wall
-  Chassis->moveDistance(-1.3_ft);
+  Drive(-12, -80, 1000);
+  pros::delay(100);
   ArmDown(ArmStart, 1500);
 
   //Go to challice
-  Chassis->setMaxVelocity(150);
-  Chassis->turnAngle(-120_deg);
-  Chassis->moveDistanceAsync(3_ft);
-  pros::delay(2000);
+  Chassis->turnAngle(-110_deg);
+  pros::delay(100);
   Intake.moveVelocity(200);
-  Chassis->waitUntilSettled();
+  Drive(30, 100, 2300);
 
   //Score cube
-  Chassis->moveDistance(-1_ft);
+  Drive(-6, -60, 800);
   Intake.moveVelocity(-200);
   pros::delay(400);
   Intake.moveVelocity(0);
   ArmUp(LowChalice, 3000);
-  Chassis->moveDistance(8_in);
+  Drive(8, 60, 800);
   Intake.moveVelocity(-200);
-  
+
 
 
 
