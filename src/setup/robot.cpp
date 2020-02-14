@@ -105,7 +105,7 @@ void Drive(float Distance, int Velocity, int TimeOut){
   RightEnc.reset();
   while (abs((LeftEnc.get() + RightEnc.get()))/2 < abs(inchToInch(Distance))){
     DriveVel(Velocity);
-    if (EndTime == TimeOut){break;}
+    if (EndTime < pros::millis()){break;}
   }
   Chassis->getModel()->setBrakeMode(AbstractMotor::brakeMode::brake);
   DriveVel(0);
@@ -118,7 +118,7 @@ void Drive(float Distance, int Velocity, int TimeOut){
 //Time out in milliseconds
 void ArmUp(int Position, int TimeOut){
   int EndTime = Time(TimeOut);
-  while (EndTime != pros::millis()){
+  while (EndTime > pros::millis()){
     int Error = Position - ArmPot.get();
     double Velocity = Error * Arm_kP;
     if (Error < 5){break;} //Breaks or ends loop if angler reaches position
@@ -145,7 +145,7 @@ void ArmUp(int Position, int TimeOut){
 //Time out in milliseconds
 void ArmDown(int Position, int TimeOut){
   int EndTime = Time(TimeOut);
-  while (EndTime != pros::millis()){
+  while (EndTime > pros::millis()){
     int Error = abs(ArmPot.get() - Position);
     double Velocity = Error * Arm_kP;
     if (Error < 5){break;} //Breaks or ends loop if angler reaches position
@@ -173,7 +173,7 @@ void ArmDown(int Position, int TimeOut){
 //Time out in milliseconds
 void AnglerHome(int TimeOut){
   int EndTime = Time(TimeOut);
-  while (EndTime != pros::millis()){
+  while (EndTime > pros::millis()){
     int Error = AnglerPot.get() - AnglerPotMin;
     double Voltage = Error * Angler_kP;
     if (Error < 5){break;} //Breaks or ends loop if angler reaches position
@@ -194,7 +194,7 @@ void AnglerHome(int TimeOut){
 //Time out in milliseconds
 void AnglerStack(int TimeOut){
   int EndTime = Time(TimeOut);
-  while (EndTime != pros::millis()){
+  while (EndTime > pros::millis()){
     int Error = AnglerPotMax - AnglerPot.get();
     double Voltage = Error * Angler_kP;
     if (Error < 5){break;} //Breaks or ends loop if angler reaches position
