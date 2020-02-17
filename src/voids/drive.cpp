@@ -277,9 +277,8 @@ float IMURotation;
          moveRight(finalVoltage);
          moveLeft(-finalVoltage);
        }
-       delay(10);
+       delay(20);
      }
-
    }
    driveMode("brake");
    driveStop();

@@ -3,8 +3,11 @@
 #ifndef ROBOT_HPP
 #define ROBOT_HPP
 
-extern int secondsToMillis(float input);
-extern int timeOut(int input);
+/* ********** Other ********** */
+
+int secondsToMillis(float input);
+int timeOut(int input);
+void unfold();
 
 /* ********** Cube Intake ********** */
 

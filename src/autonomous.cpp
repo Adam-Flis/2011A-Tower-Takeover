@@ -5,13 +5,11 @@
 
  void autonomous(){
 
-   delay(2000);
-   drive("f", 24, 250, 10.0);
-   intakeMove(200);
-
+   while(IMU.is_calibrating()){}
+   
    /* ********** Blue Side ********** */
 
-   //BlueBig();
+   BlueBig();
    //BlueSmall();
 
    /* ********** Red Side ********** */
