@@ -10,7 +10,7 @@ void initialize(){
     lcd::set_text(1, "IMU Calibrating");
     delay(10);
   }
-   rEnc.reset();
+  rEnc.reset();
   lEnc.reset();
 }
 
