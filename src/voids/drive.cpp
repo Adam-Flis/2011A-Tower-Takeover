@@ -2,8 +2,6 @@
 #include "define.hpp"
 #include "voids.hpp"
 
-Chassis::Chassis(){}
-
 /**
  * Converts velocity to velocity
  */
@@ -36,21 +34,27 @@ int degreesToTicks(float input){
 
 /* ********** PID Constants ********** */
 
+//Drive
 float kP = 20;
-float kP_t = 6;
-float kI = 0.01;
-float kI_t = 0.01;
 float kD = 5;
+float kI = 0.01;
+
+//Turn
+float kP_t = 6;
 float kD_t = 30;
-float kD_d = 300;
+float kI_t = 0.01;
+
+//Drift
 float kP_d = 500;
+float kD_d = 300;
+
 float intergralActive = inchToTicks(3);
 float intergralActive_t = degreesToTicks(5);
 
 /**
  * Resets the sensors except the IMU on the drivetrain
  */
-void Chassis::reset(){
+void driveReset(){
   LFD.tare_position();
   LBD.tare_position();
   RFD.tare_position();
@@ -63,7 +67,7 @@ void Chassis::reset(){
  * Sets brake mode of drivetrain
  * mode: brake, hold, or coast
  */
-void Chassis::brakeMode(string mode){
+void driveMode(string mode){
   if (mode == "brake"){
     LFD.set_brake_mode(MOTOR_BRAKE_BRAKE);
     LBD.set_brake_mode(MOTOR_BRAKE_BRAKE);
@@ -89,7 +93,7 @@ void Chassis::brakeMode(string mode){
  * side: right, left, both
  * velocity: -250 to 250
  */
-void Chassis::move(string side, int velocity){
+void driveMove(string side, int velocity){
   if (side == "right"){
     LFD.move_velocity(velocityToVelocity(velocity));
     LBD.move_velocity(velocityToVelocity(velocity));
@@ -119,195 +123,166 @@ void moveRight(int voltage){
 /**
  * Stops the drivetrain
  */
-void Chassis::stop(){
-  Drive.brakeMode("brake");
-  LFD.move_velocity(0);
-  LBD.move_velocity(0);
-  RFD.move_velocity(0);
-  RBD.move_velocity(0);
+void driveStop(){
+  driveMode("brake");
+  driveMove("both", 0);
 }
 
 float IMURotation;
 
 /**
  * Moves drivetrain in specificed direction
- * direction f or b
- * target: inches
- * maxVelocity: -250 to 250
+ * direction f, b, l, or r
+ * target: inches or degrees
+ * maxVelocity: 0 to 250
  * endTime: seconds
  */
-void Chassis::moveDistance(string direction, float target, int maxVelocity, float endTime) {
-  Drive.reset();
-  //Error var declarations//
-  float error;
-  float error_drift;
-  float lastError;
-  float lastError_d;
-  float rotation;
-  //Calc var declarations//
-  float proportion;
-  float proportion_drift;
-  float intergral;
-  float derivative;
-  float derivative_d;
-  float intergralLimit = (maxVelocity / kI) / 50;
-  //Motor output var declarations//
-  float targetVoltage;
-  float finalVoltage;
-  //Timeout var declarations
-  int endT = timeOut(secondsToMillis(endTime));
+ void drive(string direction, float target, int maxVelocity, float endTime) {
+   driveReset();
+   //Error var declarations//
+   float error;
+   float error_drift;
+   float lastError;
+   float lastError_d;
+   float rotation;
+   //Calc var declarations//
+   float proportion;
+   float proportion_drift;
+   float intergral;
+   float derivative;
+   float derivative_d;
+   ////////////////////////
+   float intergralLimit = (maxVelocity / kI) / 50;
+   float intergralLimit_t = (maxVelocity / kI_t) / 50;
+   //Motor output var declarations//
+   float targetVoltage;
+   float finalVoltage;
+   //Timeout var declarations
+   int endT = timeOut(secondsToMillis(endTime));
 
-  //Loop continues until time out is reached
-  while (endT > millis()) {
+   //Loop continues until time out is reached
+   while (millis() < endT) {
+     //PID calculation when the direction desired is forward/ backwards
+     if (direction == "f" || direction == "b") {
 
-    //Error reestablished at the start of the loop
-    error = inchToTicks(target) - (fabs(rEnc.get_value() + lEnc.get_value()) / 2);
-    //Proportion stores the error until it can be multiplied by the constant
-    proportion = error;
-    //Breaks loop when the robot gets close to target
-    if (error < 5){break;}
-    //Intergral takes area under the error and is useful for major adjustment
-    if (fabs(error) < intergralActive) {
-      intergral = intergral + error;
-    } else {
-      intergral = 0;
-    }
-    //Set intergral output to limit
-    if (intergral > intergralLimit) {
-      intergral = intergralLimit;
-    } else if (intergral < intergralLimit) {
-      intergral = -intergralLimit;
-    }
+       //Error reestablished at the start of the loop
+       error = inchToTicks(target) - (fabs(rEnc.get_value() + lEnc.get_value()) / 2);
+       //Proportion stores the error until it can be multiplied by the constant
+       proportion = error;
+       //Breaks loop when the robot gets close to target
+       if (error < 5) {
+         break;
+       }
+       //Intergral takes area under the error and is useful for major adjustment
+       if (fabs(error) < intergralActive) {
+         intergral = intergral + error;
+       } else {
+         intergral = 0;
+       }
+       //Set intergral output to limit
+       if (intergral > intergralLimit) {
+         intergral = intergralLimit;
+       } else if (intergral < intergralLimit) {
+         intergral = -intergralLimit;
+       }
 
-    //Derivative finds difference between current error and last recrded to recieve ROC, good for fine adjustment
-    derivative = error - lastError;
-    lastError = error;
-    //Sets var equal to zero if no adjustment is needed
-    if (error == 0) {
-      derivative = 0;
-    }
+       //Derivative finds difference between current error and last recrded to recieve ROC, good for fine adjustment
+       derivative = error - lastError;
+       lastError = error;
+       //Sets var equal to zero if no adjustment is needed
+       if (error == 0) {
+         derivative = 0;
+       }
 
-    //Convert target velocity to voltage
-    targetVoltage = velocityToVoltage(velocityToVelocity(maxVelocity));
+       //Convert target velocity to voltage
+       targetVoltage = velocityToVoltage(velocityToVelocity(maxVelocity));
 
-    //Final output of drive alg that applies constants to the PID factors
-    finalVoltage = kP * proportion + kI * intergral + kD * derivative;
-    //Sets final output so that its proportional to the target
-    if (finalVoltage > targetVoltage) {
-      finalVoltage = targetVoltage;
-    } else if (finalVoltage < -targetVoltage) {
-      finalVoltage = -targetVoltage;
-    }
-    //Establishes the initial error simply as the value of the IMU since its supposed to be 0
-    error_drift = IMU.get_rotation() - (IMURotation) / 100;
-    //Derivative finds difference between current error and last recrded to recieve ROC, good for fine adjustment
-    derivative = error_drift - lastError_d;
-    lastError_d = IMU.get_rotation();
+       //Final output of drive alg that applies constants to the PID factors
+       finalVoltage = kP * proportion + kI * intergral + kD * derivative;
 
-    proportion_drift = error_drift * kP_d;
+       if (finalVoltage > targetVoltage) {
+         finalVoltage = targetVoltage;
+       } else if (finalVoltage < -targetVoltage) {
+         finalVoltage = -targetVoltage;
+       }
 
-    if (direction == "f") {
-      moveRight(finalVoltage + proportion_drift);
-      moveLeft(finalVoltage - proportion_drift);
-    } else if (direction == "b") {
-      moveRight(-finalVoltage - proportion_drift);
-      moveLeft(-finalVoltage + proportion_drift);
-    }
-    delay(10);
-  }
-  Drive.brakeMode("brake");
-  Drive.stop();
-  Drive.reset();
-  IMURotation = IMURotation + rotation;
-}
+       //Establishes the initial error simply as the value of the IMU since its supposed to be 0
+       error_drift = IMU.get_rotation() - (IMURotation) / 100;
+       //Derivative finds difference between current error and last recrded to recieve ROC, good for fine adjustment
+       derivative = error_drift - lastError_d;
+       lastError_d = IMU.get_rotation();
 
+       proportion_drift = error_drift * kP_d;
 
+       if (direction == "f") {
+         moveRight(finalVoltage + proportion_drift);
+         moveLeft(finalVoltage - proportion_drift);
+       } else if (direction == "b") {
+         moveRight(-finalVoltage - proportion_drift);
+         moveLeft(-finalVoltage + proportion_drift);
+       }
+     }
 
-/**
- * Moves drivetrain in specificed direction
- * direction r or l
- * target: degrees
- * maxVelocity: -250 to 250
- * endTime: seconds
- */
-void Chassis::turn(string direction, float target, int maxVelocity, float endTime) {
-  Drive.reset();
-  //Error var declarations//
-  float error;
-  float error_drift;
-  float lastError;
-  float lastError_d;
-  float rotation;
-  //Calc var declarations//
-  float proportion;
-  float proportion_drift;
-  float intergral;
-  float derivative;
-  float derivative_d;
-  float intergralLimit_t = (maxVelocity / kI_t) / 50;
-  //Motor output var declarations//
-  float targetVoltage;
-  float finalVoltage;
-  //Timeout var declarations
-  int endT = timeOut(secondsToMillis(endTime));
+     //PID Calculation when the direction desired is turn center
+     else if (direction == "r" || direction == "l") {
 
-  while (endT > millis()) {
+       //Rotational Value around z-axis
+       rotation = degreesToTicks(IMU.get_rotation()) - IMURotation;
 
-    //Rotational Value around z-axis
-    rotation = degreesToTicks(IMU.get_rotation()) - IMURotation;
+       //Error reestablished at the start of the loop
+       error = degreesToTicks(target) - fabs(rotation);
+       //Proportion stores the error until it can be multiplied by the constant
+       proportion = error;
+       //Breaks loop when the robot gets close to target
+       if (error < 5) {
+         break;
+       }
+       //Intergral takes area under the error and is useful for major adjustment
+       if (fabs(error) < intergralActive_t) {
+         intergral = intergral + error;
+       } else {
+         intergral = 0;
+       }
+       //Set intergral output to limit
+       if (intergral > intergralLimit_t) {
+         intergral = intergralLimit_t;
+       } else if (intergral < intergralLimit_t) {
+         intergral = -intergralLimit_t;
+       }
 
-    //Error reestablished at the start of the loop
-    error = degreesToTicks(target) - fabs(rotation);
-    //Proportion stores the error until it can be multiplied by the constant
-    proportion = error;
-    //Intergral takes area under the error and is useful for major adjustment
-    if (fabs(error) < intergralActive_t) {
-      intergral = intergral + error;
-    } else {
-      intergral = 0;
-    }
-    //Set intergral output to limit
-    if (intergral > intergralLimit_t) {
-      intergral = intergralLimit_t;
-    } else if (intergral < intergralLimit_t) {
-      intergral = -intergralLimit_t;
-    }
+       //Derivative finds difference between current error and last recrded to recieve ROC, good for fine adjustment
+       derivative = error - lastError;
+       lastError = error;
+       //Sets var equal to zero if no adjustment is needed
+       if (error == 0) {
+         derivative = 0;
+       }
 
-    //Derivative finds difference between current error and last recrded to recieve ROC, good for fine adjustment
-    derivative = error - lastError;
-    lastError = error;
-    //Sets var equal to zero if no adjustment is needed
-    if (error == 0) {
-      derivative = 0;
-    }
+       //Convert target velocity to voltage
+       targetVoltage = velocityToVoltage(velocityToVelocity(maxVelocity));
 
-    //Convert target velocity to voltage
-    targetVoltage = velocityToVoltage(velocityToVelocity(maxVelocity));
+       //Final output of drive alg that applies constants to the PID factors
+       finalVoltage = kP_t * proportion + kI_t * intergral + kD_t * derivative;
 
-    //Final output of drive alg that applies constants to the PID factors
-    finalVoltage = kP_t * proportion + kI_t * intergral + kD_t * derivative;
-    //Sets final output so that its proportional to the target
-    // finalPct = 100*(1 - (fabs(finalVolt) / targetVolt));
-    // finalPct = finalPct / maxVelocity;
-    // finalVolt = percentToVoltage(finalPct);
-    //Declaring the final output as the target if it exceeds
-    if (finalVoltage > targetVoltage) {
-      finalVoltage = targetVoltage;
-    } else if (finalVoltage < -targetVoltage) {
-      finalVoltage = -targetVoltage;
-    }
+       if (finalVoltage > targetVoltage) {
+         finalVoltage = targetVoltage;
+       } else if (finalVoltage < -targetVoltage) {
+         finalVoltage = -targetVoltage;
+       }
 
-    if (direction == "r") {
-      moveRight(-finalVoltage);
-      moveLeft(finalVoltage);
-    } else if (direction == "l") {
-      moveRight(finalVoltage);
-      moveLeft(-finalVoltage);
-    }
-    pros::delay(10);
-  }
-  Drive.brakeMode("brake");
-  Drive.stop();
-  Drive.reset();
-  IMURotation = IMURotation + rotation;
-}
+       if (direction == "r") {
+         moveRight(-finalVoltage);
+         moveLeft(finalVoltage);
+       } else if (direction == "l") {
+         moveRight(finalVoltage);
+         moveLeft(-finalVoltage);
+       }
+       delay(10);
+     }
+
+   }
+   driveMode("brake");
+   driveStop();
+   driveReset();
+   IMURotation = IMURotation + rotation;
+ }

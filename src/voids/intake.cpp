@@ -2,12 +2,10 @@
 #include "define.hpp"
 #include "voids.hpp"
 
-Cube_Intake::Cube_Intake(){}
-
 /**
  * Sets brake mode of intake to brake
  */
-void Cube_Intake::brake(){
+void intakeBrake(){
   LI.set_brake_mode(MOTOR_BRAKE_BRAKE);
   RI.set_brake_mode(MOTOR_BRAKE_BRAKE);
 }
@@ -15,7 +13,7 @@ void Cube_Intake::brake(){
 /**
  * Sets velocity of intake between -200 to 200
  */
-void Cube_Intake::move(int velocity){
+void intakeMove(int velocity){
   LI.move_velocity(velocity);
   RI.move_velocity(velocity);
 }
@@ -23,7 +21,7 @@ void Cube_Intake::move(int velocity){
 /**
  * Stops movement of intake
  */
-void Cube_Intake::stop(){
-  Intake.brake();
-  Intake.move(0);
+void inntakeStop(){
+  intakeBrake();
+  intakeMove(0);
 }

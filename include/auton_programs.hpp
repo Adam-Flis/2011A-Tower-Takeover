@@ -21,9 +21,4 @@ void Universal();
 
 void Skills();
 
-/* ********** Other ********** */
-
-void Nothing();
-void Test();
-
 #endif

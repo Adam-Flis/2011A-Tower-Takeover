@@ -6,61 +6,30 @@
 extern int secondsToMillis(float input);
 extern int timeOut(int input);
 
-/* ********** Cube Intake Class ********** */
+/* ********** Cube Intake ********** */
 
-class Cube_Intake
-{
-public:
-  Cube_Intake();
-  virtual void brake();
-  virtual void move(int velocity);
-  virtual void stop();
-};
+void intakeBrake();
+void intakeMove(int velocity);
+void intakeStop();
 
-/* ********** Arm Class ********** */
+/* ********** Arm ********** */
 
-class Two_Bar
-{
-public:
-  Two_Bar();
-  virtual void brakeMode();
-  virtual void up(int position, int velocity, float endTime);
-  virtual void down(int position, int velocity, float endTime);
+void armBrakeMode();
+void armUp(int position, int velocity, float endTime);
+void armDown(int position, int velocity, float endTime);
 
-};
+/* ********** Angler ********** */
 
-/* ********** Angler Class ********** */
+void anglerBrakeMode();
+void anglerStack(float endTime);
+void anglerHome(float endTime);
 
-class Tilter
-{
-public:
-  Tilter();
-  virtual void brakeMode();
-  virtual void stack(float endTime);
-  virtual void home(float endTime);
-};
+/* ********** Drivetrain ********** */
 
-/* ********** Chassis Class ********** */
-
-class Chassis
-{
-public:
-  Chassis();
-  virtual void reset();
-  virtual void brakeMode(string mode);
-  virtual void move(string side, int velocity);
-  virtual void stop();
-  virtual void moveDistance(string direction, float target, int maxVelocity, float endTime);
-  virtual void turn(string direction, float target, int maxVelocity, float endTime);
-};
-
-
-/* ********** Declare Classes ********** */
-
-extern Cube_Intake Intake;
-extern Two_Bar Arm;
-extern Tilter Angler;
-extern Chassis Drive;
-
+void driveReset();
+void driveMode(string mode);
+void driveMove(string side, int velocity);
+void driveStop();
+void drive(string direction, float target, int maxVelocity, float endTime);
 
 #endif

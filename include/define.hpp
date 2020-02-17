@@ -28,8 +28,8 @@ extern Controller Main;
 
 /* ********** Declare Angler Variables ********** */
 
-extern int anglerHome;
-extern int anglerStack;
+extern int anglerHomeVar;
+extern int anglerStackVar;
 extern float angler_kP;
 extern bool trayDown;
 

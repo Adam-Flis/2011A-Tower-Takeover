@@ -1,6 +1,6 @@
 #include "main.h"
-#include "setup/define.hpp"
-#include "setup/robot.hpp"
+#include "define.hpp"
+#include "voids.hpp"
 
 //Pushes preload into scoring zone
 //Works on any side

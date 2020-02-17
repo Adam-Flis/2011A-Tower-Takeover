@@ -2,12 +2,10 @@
 #include "define.hpp"
 #include "voids.hpp"
 
-Two_Bar::Two_Bar(){}
-
 /**
  * Sets brake mode of the arm depending on its position
  */
-void Two_Bar::brakeMode(){
+void armBrakeMode(){
   if (armPot.get_value() > armHold){
     arm.set_brake_mode(MOTOR_BRAKE_HOLD);
   }
@@ -22,14 +20,14 @@ void Two_Bar::brakeMode(){
  * velocity: 0 to 200
  * endTime: Seconds
  */
-void Two_Bar::up(int position, int velocity, float endTime){
+void armUp(int position, int velocity, float endTime){
   int endT = timeOut(secondsToMillis(endTime));
   while (endT > millis()){
     arm.move_velocity(velocity);
     if (position < armPot.get_value()){break;}
     delay(10);
   }
-  Arm.brakeMode();
+  armBrakeMode(); //Sets the brake mode of the arm depending on its position
   arm.move_velocity(0);
 }
 
@@ -39,13 +37,13 @@ void Two_Bar::up(int position, int velocity, float endTime){
  * velocity: 0 to 200
  * endTime: Seconds
  */
-void Two_Bar::down(int position, int velocity, float endTime){
+void armDown(int position, int velocity, float endTime){
   int endT = timeOut(secondsToMillis(endTime));
   while (endT > millis()){
     arm.move_velocity(-velocity);
     if (position > armPot.get_value()){break;}
     delay(10);
   }
-  Arm.brakeMode();
+  armBrakeMode(); //Sets the brake mode of the arm depending on its position
   arm.move_velocity(0);
 }
