@@ -47,14 +47,14 @@ Controller Main (CONTROLLER_MASTER);
 
 /* ********** Arm Variables ********** */
 
-int armHold = 1300;
-int lowChalice = 1695;
+int armHold = 2400;
+int lowChalice = 4010;
 int mediumChalice = 2300;
-int armHome = 760;
+int armHome = 2200;
 
 /* ********** Angler Variables ********** */
 
-int anglerHomeVar = 1150;
+int anglerHomeVar = 1180;
 int anglerStackVar = 2850;
 float angler_kP = 10.0;
 bool trayDown = false;

@@ -6,15 +6,15 @@
  void autonomous(){
 
    while(IMU.is_calibrating()){}
-   
+
    /* ********** Blue Side ********** */
 
-   BlueBig();
+   //BlueBig();
    //BlueSmall();
 
    /* ********** Red Side ********** */
 
-   //RedBig();
+   RedBig();
    //RedSmall();
 
    /* ********** Universal ********** */

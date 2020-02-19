@@ -21,7 +21,7 @@ void intakeMove(int velocity){
 /**
  * Stops movement of intake
  */
-void inntakeStop(){
+void intakeStop(){
   intakeBrake();
   intakeMove(0);
 }
