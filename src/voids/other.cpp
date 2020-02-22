@@ -19,20 +19,18 @@ int timeOut(int input){
 }
 
 /**
- * Unfolds tray
+ * Unfolds tray and deploys anti-tips
  */
 void unfold(){
-  intakeMove(200);
+  arm.move_velocity(200);
+  angler.move_voltage(7000);
   delay(500);
-  intakeMove(-200);
-  delay(200);
-  intakeStop();
-  /*arm.move_velocity(200);
-  delay(1200);
-  arm.move_velocity(0);
+  angler.move_voltage(-8500);
   delay(100);
   arm.move_velocity(-200);
-  delay(1200);
+  delay(600);
+  angler.set_brake_mode(MOTOR_BRAKE_BRAKE);
   arm.set_brake_mode(MOTOR_BRAKE_BRAKE);
-  arm.move_velocity(0);*/
+  angler.move_voltage(0);
+  arm.move_velocity(0);
 }

@@ -10,7 +10,7 @@ void anglerBrakeMode(){
     angler.set_brake_mode(MOTOR_BRAKE_HOLD);
   }
   else {
-    angler.set_brake_mode(MOTOR_BRAKE_COAST);
+    angler.set_brake_mode(MOTOR_BRAKE_BRAKE);
   }
 }
 

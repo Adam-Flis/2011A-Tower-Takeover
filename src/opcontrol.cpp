@@ -24,14 +24,18 @@ void opcontrol(){
     /* ********** Cube Intake ********** */
 
     if (Main.get_digital(DIGITAL_L1)){ //Button L1 pressed, intake cubes
-      intakeMove(200);
+      LI.move_velocity(200);
+      RI.move_velocity(200);
     }
     else if (Main.get_digital(DIGITAL_L2)){ //Button L2 pressed, outtake cubes
-      intakeMove(-200);
+      LI.move_velocity(-200);
+      RI.move_velocity(-200);
     }
     else {
-      intakeBrake(); //Sets brake mode of intake to brake
-      intakeMove(0);
+      LI.set_brake_mode(MOTOR_BRAKE_BRAKE); //Sets brake mode of intake to brake
+      RI.set_brake_mode(MOTOR_BRAKE_BRAKE);
+      LI.move_velocity(0);
+      RI.move_velocity(0);
     }
 
     /* ********** Arm ********** */

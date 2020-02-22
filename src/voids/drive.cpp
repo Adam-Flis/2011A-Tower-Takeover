@@ -89,16 +89,16 @@ void driveMode(string mode){
 }
 
 /**
- * Sets Velocity of drive train
+ * Sets velocity of drive train
  * side: right, left, both
  * velocity: -250 to 250
  */
 void driveMove(string side, int velocity){
-  if (side == "right"){
+  if (side == "left"){
     LFD.move_velocity(velocityToVelocity(velocity));
     LBD.move_velocity(velocityToVelocity(velocity));
   }
-  if (side == "left"){
+  if (side == "right"){
     RFD.move_velocity(velocityToVelocity(velocity));
     RBD.move_velocity(velocityToVelocity(velocity));
   }
@@ -107,6 +107,28 @@ void driveMove(string side, int velocity){
     LBD.move_velocity(velocityToVelocity(velocity));
     RFD.move_velocity(velocityToVelocity(velocity));
     RBD.move_velocity(velocityToVelocity(velocity));
+  }
+}
+
+/**
+ * Sets voltage limit of drive train
+ * side: right, left, both
+ * limit: -12000 to 12000
+ */
+void driveVoltLimit(string side, int limit){
+  if (side == "right"){
+    RFD.set_voltage_limit(limit);
+    RBD.set_voltage_limit(limit);
+  }
+  if (side == "left"){
+    LFD.set_voltage_limit(limit);
+    LBD.set_voltage_limit(limit);
+  }
+  if (side =="both"){
+    LFD.set_voltage_limit(limit);
+    LBD.set_voltage_limit(limit);
+    RFD.set_voltage_limit(limit);
+    RBD.set_voltage_limit(limit);
   }
 }
 
