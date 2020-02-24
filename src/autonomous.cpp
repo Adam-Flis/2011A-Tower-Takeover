@@ -10,7 +10,7 @@
    /* ********** Blue Side ********** */
 
    //BlueBig();
-   //BlueSmall();
+   BlueSmall();
 
    /* ********** Red Side ********** */
 
@@ -23,6 +23,6 @@
 
    /* ********** Skills ********** */
 
-   Skills();
+   //Skills();
 
  }

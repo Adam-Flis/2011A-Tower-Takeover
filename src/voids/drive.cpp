@@ -240,8 +240,8 @@ float IMURotation;
          moveRight(finalVoltage + proportion_drift);
          moveLeft(finalVoltage - proportion_drift);
        } else if (direction == "b") {
-         moveRight(-finalVoltage - proportion_drift);
-         moveLeft(-finalVoltage + proportion_drift);
+         moveRight(-finalVoltage);
+         moveLeft(-finalVoltage);
        }
      }
 

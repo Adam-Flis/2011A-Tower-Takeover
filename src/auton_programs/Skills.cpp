@@ -26,25 +26,25 @@ void Skills(){
   //Go to scoring zone
   drive("r", 45, 100, 2.0);
   delay(200);
-  intakeMove(-15);
+  intakeMove(-10);
   drive("f", 19, 100, 2.2);
-  anglerStack(2.5);
+  anglerStack(2.7);
   intakeMove(-200);
-  delay(50);
+  delay(100);
 
   //Drive out of scoring zone a align on wall
   driveMove("both", -100);
   delay(700);
   intakeStop();
   driveStop();
-  anglerHome(2.0);
+  anglerHome(2.2);
   drive("l", 45, 120, 1.5);
   armUp(lowChalice, 200, 2.0);
   drive("f", 24, 120, 3.0);
 
   //Drive away from wall
   driveMove("both", -100);
-  delay(600);
+  delay(500);
   driveStop();
   delay(100);
   armDown(armHome, 200, 1.5);
@@ -60,20 +60,18 @@ void Skills(){
 
   //Score cube in medium chalice
   driveMove("both", -100);
-  delay(200);
+  delay(230);
   driveStop();
   delay(100);
-  armUp(mediumChalice, 200, 3.0);
+  armUp(mediumChalice, 200, 2.5);
   drive("f", 5, 100, 1.0);
   intakeMove(-200);
   delay(800);
   intakeStop();
 
   //Drive away from medium chalice pt2
-  driveMove("both", -100);
-  delay(300);
+  drive("b", 36, 130, 2.0);
   armDown(armHome, 200, 2.0);
-  driveStop();
   delay(100);
 
   //Turn and get low chalice cube
@@ -82,7 +80,7 @@ void Skills(){
   intakeMove(200);
   drive("f", 36, 150, 3.0);
   intakeMove(-200);
-  delay(200);
+  delay(230);
   intakeStop();
 
   //Score cube in low chalice

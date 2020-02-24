@@ -17,32 +17,41 @@ void BlueSmall(){
   delay(100);
 
   //Grab line of cubes: 5 total
-  drive("f", 38, 90, 3.5);
+  drive("f", 39, 90, 3.5);
+  delay(200);
   intakeMove(100);
 
   //Drive away from line and turn at 6th cube
   drive("r", 25, 180, 1.0);
-  intakeMove(170);
-  drive("f", 8.5, 200, 1.7);
+  intakeMove(200);
+  drive("f", 9.5, 200, 1.2);
+  delay(100);
 
   //Drive away 6th cube
-  intakeStop();
   driveMove("both", -100);
-  delay(500);
+  delay(250);
+  intakeStop();
+  delay(250);
   driveStop();
   delay(100);
 
   //Turn and drive at scoing zone
-  drive("r", 185, 180, 2.7);
-  intakeMove(-30);
-  drive("f", 17, 130, 1.7);
+  drive("r", 180, 180, 2.7);
+  intakeMove(-15);
+  drive("f", 19.8, 135, 2.3);
+  driveMove("right", 140);
+  delay(600);
+  driveStop();
 
   //Stack cubes and drive away
   //Makes sure we have the time to stack
   if (Stack > millis()){
     anglerStack(2.0);
+    driveMove("both", 150);
+    delay(200);
+    driveStop();
     intakeMove(-200);
-    delay(50);
+    delay(70);
     driveMove("both", -250);
     delay(500);
     driveStop();

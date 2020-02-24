@@ -2,17 +2,23 @@
 #include "define.hpp"
 #include "voids.hpp"
 
+bool Unfold = true;
 
 void opcontrol(){
   driveMode("brake");
   while(1){
 
-    /* ********** Senor Readout ********** */
+    if(Main.get_digital(DIGITAL_UP) && Unfold == false){
+      unfold();
+      Unfold = true;
+    }
 
+    /* ********** Senor Readout ********** */
+/*
     //Dsplay sensor information for debugging
     lcd::print(1,"Inertial Sensor: %0.3f Degrees\n",IMU.get_rotation());
     lcd::print(2,"Right Encoder: %d Ticks\n",rEnc.get_value());
-    lcd::print(3,"Left Encoder: %d Ticks\n",lEnc.get_value());
+    lcd::print(3,"Left Encoder: %d Ticks\n",lEnc.get_value());*/
 
     /* ********** Drivetrain ********** */
 
@@ -45,6 +51,10 @@ void opcontrol(){
     }
     else if (Main.get_digital(DIGITAL_R2)){ //Button R2 pressed, arm down
       arm.move_velocity(-200);
+    }
+    else if (Main.get_digital(DIGITAL_L1)){ //Button L1 pressed, make arm brake hold
+      arm.set_brake_mode(MOTOR_BRAKE_HOLD);
+      arm.move_velocity(0);
     }
     else {
       armBrakeMode(); //Sets the brake mode of the arm depending on its position
