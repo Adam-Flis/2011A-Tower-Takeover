@@ -9,13 +9,13 @@
 
    /* ********** Blue Side ********** */
 
-   //BlueBig();
-   BlueSmall();
+   //BlueProtected();
+   BlueUnprotected();
 
    /* ********** Red Side ********** */
 
-   //RedBig();
-   //RedSmall();
+   //RedProtected();
+   //RedUnprotected();
 
    /* ********** Universal ********** */
 

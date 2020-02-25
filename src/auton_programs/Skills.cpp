@@ -2,8 +2,8 @@
 #include "define.hpp"
 #include "voids.hpp"
 
-//Collects 16 cubes from the field and sets 3 cubes in challices
-//Points scored: 64
+//Collects 10 cubes from the field and sets 3 cubes in challices
+//Points scored: 30
 void Skills(){
 
   //Auton start things

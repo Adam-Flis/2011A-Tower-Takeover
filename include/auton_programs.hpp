@@ -5,13 +5,13 @@
 
 /* ********** Blue Side ********** */
 
-void BlueBig();
-void BlueSmall();
+void BlueProtected();
+void BlueUnprotected();
 
 /* ********** Red Side ********** */
 
-void RedBig();
-void RedSmall();
+void RedProtected();
+void RedUnprotected();
 
 /* ********** Universal ********** */
 

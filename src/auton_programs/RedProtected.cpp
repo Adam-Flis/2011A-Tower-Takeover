@@ -3,9 +3,9 @@
 #include "voids.hpp"
 
 //Collects 4 cubes from the field
-//Places cubes into the big scoring zone close to the edge
+//Places cubes into the protected scoring zone
 //Points scored: 4
-void RedBig(){
+void RedProtected(){
 
   //Auton start things
   int Stack = timeOut(secondsToMillis(12.0));

@@ -3,9 +3,9 @@
 #include "voids.hpp"
 
 //Collects 6 cubes from the field
-//Places cubes into the small scoring zone
+//Places cubes into the unprotected scoring
 //Points scored: 6
-void BlueSmall(){
+void BlueUnprotected(){
 
   //Auton start things
   int Stack = timeOut(secondsToMillis(13.0));
