@@ -21,16 +21,9 @@ void anglerBrakeMode(){
 void anglerStack(float endTime){
   int endT = timeOut(secondsToMillis(endTime));
   while(endT > millis()){
-    float error = anglerStackVar - anglerPot.get_value();
-    float voltage = error * angler_kP;
-    if (error < 5){break;}
-    if (voltage > 12000){ //Max voltage
-      voltage = 12000;
-    }
-    if (voltage < 5000){ //Min voltage
-      voltage = 5000;
-    }
-    angler.move_voltage(voltage); //Sets the angler voltage
+    float VoltageInterval = anglerHomeVar-anglerStackVar/angler_acc * 60;
+		float AnglerVoltage = -(anglerHomeVar-anglerStackVar)/VoltageInterval;
+    angler.move_voltage(AnglerVoltage); //Sets angler voltage
     delay(10);
   }
   anglerBrakeMode(); //Sets brake mode of the angler depending on its position

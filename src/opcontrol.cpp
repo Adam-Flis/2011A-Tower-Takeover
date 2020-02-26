@@ -2,7 +2,8 @@
 #include "define.hpp"
 #include "voids.hpp"
 
-bool Unfold = true;
+bool trayDown = false;
+bool Unfold = false;
 
 void opcontrol(){
   driveMode("brake");
@@ -63,6 +64,9 @@ void opcontrol(){
 
     /* ********** Angler ********** */
 
+    float VoltageInterval = anglerHomeVar-anglerStackVar/angler_acc * 60;
+		float AnglerVoltage = -(anglerHomeVar-anglerStackVar)/VoltageInterval;
+
     if (Main.get_digital_new_press(DIGITAL_Y)){ //Angler macro key
       trayDown = !trayDown;
     }
@@ -74,15 +78,7 @@ void opcontrol(){
       trayDown = false;
     }
     else if (Main.get_digital(DIGITAL_A) && anglerPot.get_value() < anglerStackVar){ //Button A pressed, tray up
-      float error = anglerStackVar - anglerPot.get_value();
-      float voltage = error * angler_kP;
-      if (voltage > 12000){ //Max voltage
-        voltage = 12000;
-      }
-      if (voltage < 5000){ //Min voltage
-        voltage = 5000;
-      }
-      angler.move_voltage(voltage); //Sets angler voltage
+      angler.move_voltage(AnglerVoltage); //Sets angler voltage
       trayDown = false;
     }
     else {

@@ -14,7 +14,7 @@ int velocityToVelocity(int input){
  * Converts velocity to voltage
  */
 float velocityToVoltage (float input){
-  int output = (input * 60);
+  int output = input * 60;
   return output;
 }
 
