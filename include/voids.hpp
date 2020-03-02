@@ -34,6 +34,6 @@ void driveMode(string mode);
 void driveMove(string side, int velocity);
 void driveVoltLimit(string side, int limit);
 void driveStop();
-void drive(string direction, float target, int maxVelocity, float endTime);
+void drive(string direction, float target, int maxVelocity, float endTime, bool drift = true);
 
 #endif

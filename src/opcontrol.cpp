@@ -15,7 +15,7 @@ void opcontrol(){
     }
 
     /* ********** Senor Readout ********** */
-/*
+    /*
     //Dsplay sensor information for debugging
     lcd::print(1,"Inertial Sensor: %0.3f Degrees\n",IMU.get_rotation());
     lcd::print(2,"Right Encoder: %d Ticks\n",rEnc.get_value());
@@ -23,9 +23,9 @@ void opcontrol(){
 
     /* ********** Drivetrain ********** */
 
-    LFD.move(Main.get_analog(ANALOG_LEFT_Y));
+    LFD.move(Main.get_analog(ANALOG_LEFT_Y)); //Left joystick pushed or pulled, move left drive
     LBD.move(Main.get_analog(ANALOG_LEFT_Y));
-    RFD.move(Main.get_analog(ANALOG_RIGHT_Y));
+    RFD.move(Main.get_analog(ANALOG_RIGHT_Y)); //Right joystick pushed or pulled, move right drive
     RBD.move(Main.get_analog(ANALOG_RIGHT_Y));
 
     /* ********** Cube Intake ********** */
@@ -41,7 +41,7 @@ void opcontrol(){
     else {
       LI.set_brake_mode(MOTOR_BRAKE_BRAKE); //Sets brake mode of intake to brake
       RI.set_brake_mode(MOTOR_BRAKE_BRAKE);
-      LI.move_velocity(0);
+      LI.move_velocity(0); //Stops intakes
       RI.move_velocity(0);
     }
 
@@ -53,19 +53,15 @@ void opcontrol(){
     else if (Main.get_digital(DIGITAL_R2)){ //Button R2 pressed, arm down
       arm.move_velocity(-200);
     }
-    else if (Main.get_digital(DIGITAL_L1)){ //Button L1 pressed, make arm brake hold
-      arm.set_brake_mode(MOTOR_BRAKE_HOLD);
-      arm.move_velocity(0);
+    else if (Main.get_digital(DIGITAL_L1) && armPot.get_value() < armHold){ //Button L1 pressed, arm constant power
+      arm.move_velocity(-5);
     }
     else {
       armBrakeMode(); //Sets the brake mode of the arm depending on its position
-      arm.move_velocity(0);
+      arm.move_velocity(0); //Stops arm
     }
 
     /* ********** Angler ********** */
-
-    float VoltageInterval = anglerHomeVar-anglerStackVar/angler_acc * 60;
-		float AnglerVoltage = -(anglerHomeVar-anglerStackVar)/VoltageInterval;
 
     if (Main.get_digital_new_press(DIGITAL_Y)){ //Angler macro key
       trayDown = !trayDown;
@@ -78,13 +74,24 @@ void opcontrol(){
       trayDown = false;
     }
     else if (Main.get_digital(DIGITAL_A) && anglerPot.get_value() < anglerStackVar){ //Button A pressed, tray up
-      angler.move_voltage(AnglerVoltage); //Sets angler voltage
+      float error = anglerStackVar - anglerPot.get_value();
+      float voltage = error * angler_Kp;
+      if ((anglerHomeVar + anglerAdd) > anglerPot.get_value()){ //Sets voltage if below specific position
+        voltage = 12000; //Max voltage
+      }
+      if (voltage > 12000){ //Max voltage
+        voltage = 12000;
+      }
+      if (voltage < 5000){ //Min voltage
+        voltage = 5000;
+      }
+      angler.move_voltage(voltage); //Sets angler voltage
       trayDown = false;
     }
     else {
       trayDown = false;
       anglerBrakeMode(); //Sets the brake mode of the angler depending on its position
-      angler.move_velocity(0);
+      angler.move_velocity(0); //Stops angler
     }
     delay(10); //Loop speed, prevent overload
   }

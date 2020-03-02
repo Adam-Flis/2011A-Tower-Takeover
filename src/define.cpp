@@ -56,4 +56,5 @@ int armHome = 740;
 
 int anglerHomeVar = 1260;
 int anglerStackVar = 3480;
-float angler_acc = 145;
+int anglerAdd = 650;
+float angler_Kp = 9.8;

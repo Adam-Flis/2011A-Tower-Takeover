@@ -3,7 +3,7 @@
 #include "voids.hpp"
 
 /**
- * Converts velocity to velocity
+ * Converts 250 velocity to 200 velocity
  */
 int velocityToVelocity(int input){
   int output = input * 0.8;
@@ -35,13 +35,13 @@ int degreesToTicks(float input){
 /* ********** PID Constants ********** */
 
 //Drive
-float kP = 20;
-float kD = 5;
+float kP = 17.5;
+float kD = 14;
 float kI = 0.01;
 
 //Turn
-float kP_t = 6;
-float kD_t = 30;
+float kP_t = 5;
+float kD_t = 26.5;
 float kI_t = 0.01;
 
 //Drift
@@ -132,11 +132,19 @@ void driveVoltLimit(string side, int limit){
   }
 }
 
+/**
+ * Sets voltage of left side
+ * voltage: -12000 to 12000
+ */
 void moveLeft(int voltage){
    LFD.move_voltage(voltage);
    LBD.move_voltage(voltage);
 }
 
+/**
+ * Sets voltage of right side
+ * voltage: -12000 to 12000
+ */
 void moveRight(int voltage){
    RFD.move_voltage(voltage);
    RBD.move_voltage(voltage);
@@ -150,16 +158,16 @@ void driveStop(){
   driveMove("both", 0);
 }
 
-float IMURotation;
-
 /**
  * Moves drivetrain in specificed direction
  * direction f, b, l, or r
  * target: inches or degrees
  * maxVelocity: 0 to 250
  * endTime: seconds
+ * drift: true/false
  */
- void drive(string direction, float target, int maxVelocity, float endTime) {
+ float IMURotation;
+ void drive(string direction, float target, int maxVelocity, float endTime, bool drift) {
    driveReset();
    //Error var declarations//
    float error;
@@ -192,9 +200,7 @@ float IMURotation;
        //Proportion stores the error until it can be multiplied by the constant
        proportion = error;
        //Breaks loop when the robot gets close to target
-       if (error < 5) {
-         break;
-       }
+       if (error < 5) {break;}
        //Intergral takes area under the error and is useful for major adjustment
        if (fabs(error) < intergralActive) {
          intergral = intergral + error;
@@ -229,19 +235,22 @@ float IMURotation;
        }
 
        //Establishes the initial error simply as the value of the IMU since its supposed to be 0
-       error_drift = IMU.get_rotation() - (IMURotation) / 100;
+       error_drift = IMU.get_rotation() - (IMURotation / 100);
        //Derivative finds difference between current error and last recrded to recieve ROC, good for fine adjustment
        derivative = error_drift - lastError_d;
        lastError_d = IMU.get_rotation();
 
        proportion_drift = error_drift * kP_d;
 
-       if (direction == "f") {
-         moveRight(finalVoltage + proportion_drift);
-         moveLeft(finalVoltage - proportion_drift);
+       if (direction == "f" && drift == true) {
+         moveRight(finalVoltage + proportion_drift); //Sets voltage of right side
+         moveLeft(finalVoltage - proportion_drift); //Sets voltage on left side
+       } else if (direction == "f" && drift == false) {
+         moveRight(finalVoltage); //Sets voltage of right side
+         moveLeft(finalVoltage); //Sets voltage on left side
        } else if (direction == "b") {
-         moveRight(-finalVoltage);
-         moveLeft(-finalVoltage);
+         moveRight(-finalVoltage); //Sets voltage of right side
+         moveLeft(-finalVoltage); //Sets voltage on left side
        }
      }
 
@@ -256,9 +265,7 @@ float IMURotation;
        //Proportion stores the error until it can be multiplied by the constant
        proportion = error;
        //Breaks loop when the robot gets close to target
-       if (error < 5) {
-         break;
-       }
+       //if (error < 2) {break;}
        //Intergral takes area under the error and is useful for major adjustment
        if (fabs(error) < intergralActive_t) {
          intergral = intergral + error;
@@ -293,11 +300,11 @@ float IMURotation;
        }
 
        if (direction == "r") {
-         moveRight(-finalVoltage);
-         moveLeft(finalVoltage);
+         moveRight(-finalVoltage); //Sets voltage of right side
+         moveLeft(finalVoltage); //Sets voltage on left side
        } else if (direction == "l") {
-         moveRight(finalVoltage);
-         moveLeft(-finalVoltage);
+         moveRight(finalVoltage); //Sets voltage on right side
+         moveLeft(-finalVoltage); //Sets voltage on left side
        }
        delay(20);
      }

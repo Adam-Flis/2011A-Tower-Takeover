@@ -70,29 +70,9 @@ void Skills(){
   intakeStop();
 
   //Drive away from medium chalice pt2
-  drive("b", 36, 130, 2.0);
+  drive("b", 18, 130, 2.0);
   armDown(armHome, 200, 2.0);
   delay(100);
-
-  //Turn and get low chalice cube
-  drive("l", 90, 130, 2.0);
-  delay(50);
-  intakeMove(200);
-  drive("f", 36, 150, 3.0);
-  intakeMove(-200);
-  delay(230);
   intakeStop();
-
-  //Score cube in low chalice
-  driveMove("both", -100);
-  delay(200);
-  driveStop();
-  delay(100);
-  armUp(lowChalice, 200, 3.0);
-  drive("f", 5, 100, 1.0);
-  intakeMove(-200);
-  delay(800);
-  intakeStop();
-
 
 }

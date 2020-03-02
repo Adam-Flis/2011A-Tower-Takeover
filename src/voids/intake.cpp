@@ -22,6 +22,6 @@ void intakeMove(int velocity){
  * Stops movement of intake
  */
 void intakeStop(){
-  intakeBrake();
-  intakeMove(0);
+  intakeBrake(); //Sets brake mode of intake to brake
+  intakeMove(0); //Stops intakes
 }

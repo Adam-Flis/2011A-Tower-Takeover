@@ -10,7 +10,7 @@
    /* ********** Blue Side ********** */
 
    //BlueProtected();
-   BlueUnprotected();
+   //BlueUnprotected();
 
    /* ********** Red Side ********** */
 

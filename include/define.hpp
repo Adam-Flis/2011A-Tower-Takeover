@@ -30,7 +30,8 @@ extern Controller Main;
 
 extern int anglerHomeVar;
 extern int anglerStackVar;
-extern float angler_acc;
+extern int anglerAdd;
+extern float angler_Kp;
 
 /* ********** Declare Arm Variables ********** */
 
