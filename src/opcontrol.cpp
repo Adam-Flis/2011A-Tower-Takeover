@@ -3,15 +3,15 @@
 #include "voids.hpp"
 
 bool trayDown = false;
-bool Unfold = false;
+bool Unfold = true;
 
 void opcontrol(){
   driveMode("brake");
   while(1){
 
-    if(Main.get_digital(DIGITAL_UP) && Unfold == false){
+    if(Main.get_digital(DIGITAL_UP) && Unfold == true){
       unfold();
-      Unfold = true;
+      Unfold = false;
     }
 
     /* ********** Senor Readout ********** */

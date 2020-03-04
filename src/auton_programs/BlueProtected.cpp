@@ -2,58 +2,55 @@
 #include "define.hpp"
 #include "voids.hpp"
 
-//Collects 4 cubes from the field
+//Collects 5 cubes from the field
 //Places cubes into the protected scoring zone
-//Points scored: 4
+//Points scored: 5
 void BlueProtected(){
 
   //Auton start things
-  int Stack = timeOut(secondsToMillis(12.0));
   driveMove("both", -15);
-  unfold();
-  delay(1000);
+  //unfold();
+  angler.move_voltage(12000);
+  delay(150);
+  angler.move_voltage(-12000);
+  delay(250);
+  angler.move_velocity(0);
   driveStop();
   intakeMove(200);
+  arm.move_velocity(-5);
 
   //Drive at 1st & 2nd cube
-  drive("f", 18, 220, 1.3);
-  delay(200);
-  intakeMove(100);
+  drive("f", 22, 170, 1.2);
+  intakeStop();
+  delay(20);
 
   //Turn and get 3rd and 4th cube
-  drive("l", 85, 160, 1.3);
-  delay(100);
-  intakeMove(200);
-  drive("f", 29, 130, 2.3);
+  drive("l", 92, 160, 1.1);
+  delay(20);
+  intakeMove(150);
+  drive("f", 24.5, 110, 1.8);
   delay(300);
 
-  //Drive away from cube and go to scoring zone
-  intakeMove(100);
-  drive("b", 20, 220, 2.0);
-  intakeMove(0);
-  delay(250);
-  drive("l", 160, 170, 2.0);
+  //Turn and get 5th cube
+  intakeStop();
+  drive("l", 22, 100, 0.5);
+  delay(20);
+  intakeMove(200);
+  drive("f", 13, 100, 1.0);
+  delay(350);
 
-  //Go to stack cubes
-  RFD.set_voltage_limit(5000);
-  RBD.set_voltage_limit(5000);
-  delay(100);
-  intakeMove(-35);
-  drive("f", 11.5, 120, 1.2);
-  RFD.set_voltage_limit(12000);
-  RBD.set_voltage_limit(12000);
-
-  //Stack cubes and drive away
-  //Makes sure we have the time to stack
-  if (Stack > millis()){
-    anglerStack(2.3);
-    driveMove("both", -250);
-    delay(500);
-    driveStop();
-    intakeMove(0);
-    anglerHome(2.0);
-  }
-  //Does not stack if stack int is smaller than millis
+  //Drive away from cube turn at scoring zone
   intakeMove(0);
+  drive("b", 20, 220, 1.0);
+  delay(20);
+  drive("l", 135, 200, 1.5);
+
+  //Drive at scoring zone and score cubes
+  drive("f", 18, 150, 0.9);
+  anglerStack(2.0);
+  intakeMove(-200);
+  delay(150);
+  drive("b", 12, 250, 1.0);
+  intakeStop();
 
 }

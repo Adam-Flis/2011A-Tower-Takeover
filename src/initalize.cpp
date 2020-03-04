@@ -6,10 +6,12 @@
 void initialize(){
   lcd::initialize(); //Turns on the lcd display
   IMU.reset(); //Starts the calibration process for the IMU
+  delay(20);
   while (IMU.is_calibrating()){  //Display IMU is calibrating while it is calibrating
     lcd::set_text(1, "IMU Calibrating");
     delay(10);
   }
+  lcd::clear();
   rEnc.reset(); //Reset right encoder
   lEnc.reset(); //Reset left encoder
 }

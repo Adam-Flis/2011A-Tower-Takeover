@@ -23,14 +23,11 @@ int timeOut(int input){
  */
 void unfold(){
   arm.move_voltage(12000);
-  intakeMove(-200);
-  delay(200);
   angler.move_voltage(12000);
-  delay(500);
+  delay(400);
   angler.move_voltage(-12000);
   arm.move_voltage(-12000);
-  delay(700);
-  intakeStop();
+  delay(450);
   arm.move_velocity(0);
   angler.move_velocity(0);
 }

@@ -8,12 +8,16 @@
 void RedProtected(){
 
   //Auton start things
-  int Stack = timeOut(secondsToMillis(12.0));
   driveMove("both", -15);
-  unfold();
-  delay(1000);
+  //unfold();
+  angler.move_voltage(12000);
+  delay(150);
+  angler.move_voltage(-12000);
+  delay(250);
+  angler.move_velocity(0);
   driveStop();
   intakeMove(200);
+  arm.move_velocity(-5);
 
   //Drive at 1st & 2nd cube
   drive("f", 18, 220, 1.3);
@@ -44,16 +48,11 @@ void RedProtected(){
   LBD.set_voltage_limit(12000);
 
   //Stack cubes and drive away
-  //Makes sure we have the time to stack
-  if (Stack > millis()){
-    anglerStack(2.3);
-    driveMove("both", -250);
-    delay(500);
-    driveStop();
-    intakeMove(0);
-    anglerHome(2.0);
-  }
-  //Does not stack if stack int is smaller than millis
+  anglerStack(2.3);
+  driveMove("both", -250);
+  delay(500);
+  driveStop();
   intakeMove(0);
+  anglerHome(2.0);
 
 }

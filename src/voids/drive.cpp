@@ -40,8 +40,8 @@ float kD = 14;
 float kI = 0.01;
 
 //Turn
-float kP_t = 5;
-float kD_t = 26.5;
+float kP_t = 5.9;
+float kD_t = 30;
 float kI_t = 0.01;
 
 //Drift
@@ -158,6 +158,8 @@ void driveStop(){
   driveMove("both", 0);
 }
 
+ float IMURotation;
+
 /**
  * Moves drivetrain in specificed direction
  * direction f, b, l, or r
@@ -166,7 +168,6 @@ void driveStop(){
  * endTime: seconds
  * drift: true/false
  */
- float IMURotation;
  void drive(string direction, float target, int maxVelocity, float endTime, bool drift) {
    driveReset();
    //Error var declarations//
@@ -199,8 +200,6 @@ void driveStop(){
        error = inchToTicks(target) - (fabs(rEnc.get_value() + lEnc.get_value()) / 2);
        //Proportion stores the error until it can be multiplied by the constant
        proportion = error;
-       //Breaks loop when the robot gets close to target
-       if (error < 5) {break;}
        //Intergral takes area under the error and is useful for major adjustment
        if (fabs(error) < intergralActive) {
          intergral = intergral + error;
@@ -264,8 +263,6 @@ void driveStop(){
        error = degreesToTicks(target) - fabs(rotation);
        //Proportion stores the error until it can be multiplied by the constant
        proportion = error;
-       //Breaks loop when the robot gets close to target
-       //if (error < 2) {break;}
        //Intergral takes area under the error and is useful for major adjustment
        if (fabs(error) < intergralActive_t) {
          intergral = intergral + error;

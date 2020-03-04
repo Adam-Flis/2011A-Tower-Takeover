@@ -16,9 +16,7 @@ void Skills(){
 
   //Intake first line of cube
   drive("f", 135, 80, 12.0);
-  driveMove("both", -80);
-  delay(800);
-  driveStop();
+  drive("b", 12, 100, 1.0);
   intakeMove(100);
   delay(200);
   arm.set_brake_mode(MOTOR_BRAKE_BRAKE);
