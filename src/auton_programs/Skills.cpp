@@ -2,7 +2,7 @@
 #include "define.hpp"
 #include "voids.hpp"
 
-//Collects 10 cubes from the field and sets 3 cubes in challices
+//Collects 10 cubes from the field and sets 2 cubes in challices
 //Points scored: 30
 void Skills(){
 
@@ -11,7 +11,7 @@ void Skills(){
   unfold();
   driveStop();
   intakeMove(200);
-  arm.set_brake_mode(MOTOR_BRAKE_HOLD);
+  arm.move_velocity(-5);
   delay(100);
 
   //Intake first line of cube
@@ -19,7 +19,7 @@ void Skills(){
   drive("b", 12, 100, 1.0);
   intakeMove(100);
   delay(200);
-  arm.set_brake_mode(MOTOR_BRAKE_BRAKE);
+  arm.move_velocity(0);
 
   //Go to scoring zone
   drive("r", 45, 100, 2.0);
@@ -28,23 +28,19 @@ void Skills(){
   drive("f", 19, 100, 2.2);
   anglerStack(2.7);
   intakeMove(-200);
-  delay(100);
+  delay(150);
 
   //Drive out of scoring zone a align on wall
-  driveMove("both", -100);
-  delay(700);
+  drive("b", 12, 200, 1.0);
   intakeStop();
-  driveStop();
   anglerHome(2.2);
   drive("l", 45, 120, 1.5);
-  armUp(lowChalice, 200, 2.0);
+  armUp(smallChalice, 200, 2.0);
   drive("f", 24, 120, 3.0);
 
   //Drive away from wall
-  driveMove("both", -100);
-  delay(500);
-  driveStop();
-  delay(100);
+  drive("b", 12, 200, 0.8);
+  delay(50);
   armDown(armHome, 200, 1.5);
 
   //Turn and get medium chalice cube
@@ -57,10 +53,8 @@ void Skills(){
   intakeStop();
 
   //Score cube in medium chalice
-  driveMove("both", -100);
-  delay(230);
-  driveStop();
-  delay(100);
+  drive("b", 5, 100, 1.0);
+  delay(50);
   armUp(mediumChalice, 200, 2.5);
   drive("f", 5, 100, 1.0);
   intakeMove(-200);
@@ -73,4 +67,21 @@ void Skills(){
   delay(100);
   intakeStop();
 
+  //Turn and get small chalice cube
+  drive("l", 90, 130, 1.5);
+  delay(50);
+  intakeMove(200);
+  drive("f", 38, 200, 2.2);
+  intakeMove(-200);
+  delay(200);
+  intakeStop();
+
+  //Score cube in small chalice
+  drive("b", 5, 100, 1.0);
+  delay(50);
+  armUp(smallChalice, 200, 2.5);
+  drive("f", 5, 100, 1.0);
+  intakeMove(-200);
+  delay(800);
+  intakeStop();
 }

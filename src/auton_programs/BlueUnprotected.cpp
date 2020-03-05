@@ -3,7 +3,7 @@
 #include "voids.hpp"
 
 //Collects 8 cubes from the field
-//Places cubes into the unprotected scoring
+//Places cubes into the unprotected scoring zone
 //Points scored: 8
 void BlueUnprotected(){
 
@@ -17,33 +17,34 @@ void BlueUnprotected(){
 
   //Grab line of cubes: 6 total
   drive("f", 54.7, 85, 4.09);
-  delay(475);
+  delay(100);
+  intakeMove(100);
+  drive("b", 10, 250, 0.8);
   intakeStop();
-  drive("b", 10.7, 250, 0.86);
   delay(20);
 
   //Turn and drive at 2nd line
-  drive("l", 50, 200, 0.45);
+  drive("l", 42, 210, 0.35);
   delay(20);
-  drive("b", 36.5, 250, 1.48);
+  drive("b", 37.5, 250, 1.5);
   delay(20);
-  drive("r", 39, 200, 0.33);
+  drive("r", 40, 210, 0.35);
   delay(20);
 
   //Grab next 2 cubes
   intakeMove(200);
-  drive("f", 24, 107, 2.1, false);
+  drive("f", 23.5, 105, 2.13, false);
 
   //Turn and drive at scoring zone
+  delay(80);
   intakeStop();
   arm.move_velocity(0);
-  delay(70);
-  drive("l", 100, 135, 1.75);
-  angler.move_voltage(8100);
-  drive("f", 34.85, 180, 2.427, false);
+  drive("l", 97, 125, 1.8);
+  angler.move_voltage(8075);
+  drive("f", 36, 185, 2.44, false);
 
   //Score cubes
-  driveMove("right", 40);
+  driveMove("both", 50);
   anglerStack(1.0);
   driveStop();
   intakeMove(-200);

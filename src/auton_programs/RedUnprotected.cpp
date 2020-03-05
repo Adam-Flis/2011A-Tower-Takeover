@@ -3,7 +3,7 @@
 #include "voids.hpp"
 
 //Collects 8 cubes from the field
-//Places cubes into the unprotected scoring
+//Places cubes into the unprotected scoring zone
 //Points scored: 8
 void RedUnprotected(){
 
@@ -55,5 +55,4 @@ void RedUnprotected(){
   intakeMove(-200);
   delay(150);
   drive("b", 12, 250, 1.0);
-
 }

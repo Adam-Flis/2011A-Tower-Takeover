@@ -9,7 +9,7 @@ void BlueProtected(){
 
   //Auton start things
   driveMove("both", -15);
-  //unfold();
+  unfold();
   angler.move_voltage(12000);
   delay(150);
   angler.move_voltage(-12000);
@@ -40,7 +40,7 @@ void BlueProtected(){
   delay(350);
 
   //Drive away from cube turn at scoring zone
-  intakeMove(0);
+  intakeStop();
   drive("b", 20, 220, 1.0);
   delay(20);
   drive("l", 135, 200, 1.5);

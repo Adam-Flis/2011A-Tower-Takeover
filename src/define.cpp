@@ -48,7 +48,7 @@ Controller Main (CONTROLLER_MASTER);
 /* ********** Arm Variables ********** */
 
 int armHold = 1100;
-int lowChalice = 1600;
+int smallChalice = 1600;
 int mediumChalice = 2050;
 int armHome = 740;
 

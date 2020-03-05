@@ -35,7 +35,7 @@ extern float angler_Kp;
 
 /* ********** Declare Arm Variables ********** */
 
-extern int lowChalice;
+extern int smallChalice;
 extern int mediumChalice;
 extern int armHold;
 extern int armHome;
