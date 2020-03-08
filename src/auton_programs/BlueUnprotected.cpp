@@ -10,44 +10,57 @@ void BlueUnprotected(){
   //Auton start things
   driveMove("both", -15);
   unfold();
-  delay(50);
-  driveStop();
+  angler.move_voltage(-12000);
   intakeMove(200);
+  delay(70);
+  driveStop();
   arm.move_velocity(-5);
+  angler.move_voltage(-1000);
 
   //Grab line of cubes: 6 total
-  drive("f", 54.7, 85, 4.09);
+  drive("f", 55.5, 90, 4.0);
   delay(100);
-  intakeMove(100);
-  drive("b", 10, 250, 0.8);
+  intakeMove(175);
+  drive("b", 11.5, 250, 0.9);
   intakeStop();
+  angler.move_velocity(0);
   delay(20);
 
   //Turn and drive at 2nd line
-  drive("l", 42, 210, 0.35);
+  drive("l", 38, 180, 0.33);
   delay(20);
-  drive("b", 37.5, 250, 1.5);
+  drive("b", 36, 220, 1.7);
   delay(20);
-  drive("r", 40, 210, 0.35);
+  drive("r", 35, 180, 0.33);
   delay(20);
 
   //Grab next 2 cubes
-  intakeMove(200);
-  drive("f", 23.5, 105, 2.13, false);
+  intakeMove(160);
+  drive("f", 20, 95, 1.75, false);
 
   //Turn and drive at scoring zone
   delay(80);
   intakeStop();
   arm.move_velocity(0);
-  drive("l", 97, 125, 1.8);
+  drive("l", 98, 135, 1.8);
   angler.move_voltage(8075);
-  drive("f", 36, 185, 2.44, false);
+  drive("f", 36.5, 190, 2.45, false);
 
   //Score cubes
-  driveMove("both", 50);
+  driveMove("both", 70);
+  delay(60);
   anglerStack(1.0);
   driveStop();
   intakeMove(-200);
   delay(150);
   drive("b", 12, 250, 1.0);
+
 }
+/*
+angler.move_velocity(200);
+delay(200);
+angler.move_velocity(-200);
+delay(350);
+angler.move_velocity(0);
+delay(50);
+driveStop();*/

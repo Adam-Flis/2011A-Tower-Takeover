@@ -10,18 +10,17 @@ void BlueProtected(){
   //Auton start things
   driveMove("both", -15);
   unfold();
-  angler.move_voltage(12000);
-  delay(150);
   angler.move_voltage(-12000);
-  delay(250);
-  angler.move_velocity(0);
-  driveStop();
   intakeMove(200);
+  delay(70);
+  driveStop();
   arm.move_velocity(-5);
+  angler.move_voltage(-1000);
 
   //Drive at 1st & 2nd cube
   drive("f", 22, 170, 1.2);
   intakeStop();
+  angler.move_velocity(0);
   delay(20);
 
   //Turn and get 3rd and 4th cube

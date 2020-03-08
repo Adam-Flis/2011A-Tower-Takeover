@@ -35,12 +35,12 @@ int degreesToTicks(float input){
 /* ********** PID Constants ********** */
 
 //Drive
-float kP = 17.5;
-float kD = 14;
+float kP = 14.5;
+float kD = 13;
 float kI = 0.01;
 
 //Turn
-float kP_t = 5.9;
+float kP_t = 6;
 float kD_t = 30;
 float kI_t = 0.01;
 

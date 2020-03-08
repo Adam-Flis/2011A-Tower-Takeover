@@ -49,7 +49,7 @@ Controller Main (CONTROLLER_MASTER);
 
 int armHold = 1100;
 int smallChalice = 1600;
-int mediumChalice = 2050;
+int mediumChalice = 2000;
 int armHome = 740;
 
 /* ********** Angler Variables ********** */

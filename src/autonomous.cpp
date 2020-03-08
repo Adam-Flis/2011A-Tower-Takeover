@@ -14,8 +14,8 @@
 
    /* ********** Red Side ********** */
 
-   //RedProtected();
-   RedUnprotected();
+   RedProtected();
+   //RedUnprotected();
 
    /* ********** Universal ********** */
 
