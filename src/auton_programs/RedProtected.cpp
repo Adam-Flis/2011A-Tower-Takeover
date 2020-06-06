@@ -21,11 +21,9 @@ void RedProtected(){
   drive("f", 22, 170, 1.2);
   intakeStop();
   angler.move_velocity(0);
-  delay(20);
 
   //Turn and get 2nd and 3rd cube
   drive("r", 92, 160, 1.1);
-  delay(20);
   intakeMove(150);
   drive("f", 24.5, 110, 1.8);
   delay(300);
@@ -33,7 +31,6 @@ void RedProtected(){
   //Drive away from cube turn at scoring zone
   intakeStop();
   drive("b", 20, 220, 1.0);
-  delay(20);
   drive("r", 200, 200, 2.0);
 
   //Drive at scoring zone and score cubes

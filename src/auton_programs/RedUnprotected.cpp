@@ -24,15 +24,11 @@ void RedUnprotected(){
   drive("b", 11.5, 250, 0.9);
   intakeStop();
   angler.move_velocity(0);
-  delay(20);
 
   //Turn and drive at 2nd line
   drive("r", 38, 180, 0.33);
-  delay(20);
   drive("b", 36, 220, 1.7);
-  delay(20);
   drive("l", 35, 180, 0.33);
-  delay(20);
 
   //Grab next 2 cubes
   intakeMove(160);

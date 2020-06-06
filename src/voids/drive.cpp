@@ -247,7 +247,11 @@ void driveStop(){
        } else if (direction == "f" && drift == false) {
          moveRight(finalVoltage); //Sets voltage of right side
          moveLeft(finalVoltage); //Sets voltage on left side
-       } else if (direction == "b") {
+       } else if (direction == "b" && drift == true) {
+         moveRight(-finalVoltage + proportion_drift); //Sets voltage of right side
+         moveLeft(-finalVoltage - proportion_drift); //Sets voltage on left side
+       }
+       else if (direction == "b" && drift == false) {
          moveRight(-finalVoltage); //Sets voltage of right side
          moveLeft(-finalVoltage); //Sets voltage on left side
        }
@@ -310,4 +314,5 @@ void driveStop(){
    driveStop();
    driveReset();
    IMURotation = IMURotation + rotation;
+   delay(20);
  }

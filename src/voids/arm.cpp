@@ -22,9 +22,8 @@ void armBrakeMode(){
  */
 void armUp(int position, int velocity, float endTime){
   int endT = timeOut(secondsToMillis(endTime));
-  while (endT > millis()){
+  while (endT > millis() || position > armPot.get_value()){
     arm.move_velocity(velocity);
-    if (position < armPot.get_value()){break;} //Stops movement if arm gets to desired position
     delay(10);
   }
   armBrakeMode(); //Sets the brake mode of the arm depending on its position
@@ -39,9 +38,8 @@ void armUp(int position, int velocity, float endTime){
  */
 void armDown(int position, int velocity, float endTime){
   int endT = timeOut(secondsToMillis(endTime));
-  while (endT > millis()){
+  while (endT > millis() || position < armPot.get_value()){
     arm.move_velocity(-velocity);
-    if (position > armPot.get_value()){break;} //Stops movement if arm gets to desired position
     delay(10);
   }
   armBrakeMode(); //Sets the brake mode of the arm depending on its position

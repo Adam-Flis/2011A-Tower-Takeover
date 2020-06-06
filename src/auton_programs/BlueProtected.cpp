@@ -21,11 +21,9 @@ void BlueProtected(){
   drive("f", 22, 170, 1.2);
   intakeStop();
   angler.move_velocity(0);
-  delay(20);
 
   //Turn and get 3rd and 4th cube
   drive("l", 92, 160, 1.1);
-  delay(20);
   intakeMove(150);
   drive("f", 24.5, 110, 1.8);
   delay(300);
@@ -33,7 +31,6 @@ void BlueProtected(){
   //Turn and get 5th cube
   intakeStop();
   drive("l", 22, 100, 0.5);
-  delay(20);
   intakeMove(200);
   drive("f", 13, 100, 1.0);
   delay(350);
@@ -41,7 +38,6 @@ void BlueProtected(){
   //Drive away from cube turn at scoring zone
   intakeStop();
   drive("b", 20, 220, 1.0);
-  delay(20);
   drive("l", 135, 200, 1.5);
 
   //Drive at scoring zone and score cubes
